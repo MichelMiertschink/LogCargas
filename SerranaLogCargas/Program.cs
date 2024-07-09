@@ -4,6 +4,8 @@ using LogCargas.Data;
 using LogCargas.Services;
 using Microsoft.Extensions.Options;
 using MySqlConnector;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
 
 namespace LogCargas
 {
@@ -28,17 +30,34 @@ namespace LogCargas
             builder.Services.AddScoped<DriverService>();
             builder.Services.AddScoped<LoadSchedulingService>();
 
-
             // Seeding service
             var conectionString = builder.Configuration.GetConnectionString("AppDb");
             builder.Services.AddTransient<SeedingService>();
 
-
-
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
             builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<LogCargasContext>();
+
+            builder.Services.AddRazorPages();
+
+
+            //builder.Services.AddAuthorization(options =>
+            //{
+            //    options.FallbackPolicy = new AuthorizationPolicyBuilder()
+            //    .RequireAuthenticatedUser()
+            //    .Build();
+            //});
+
+            //builder.Services.AddControllers(config =>
+            //{
+            //    var policy = new AuthorizationPolicyBuilder()
+            //                     .RequireAuthenticatedUser()
+            //                     .Build();
+            //    config.Filters.Add(new AuthorizeFilter(policy));
+            //});
+
             builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
             var app = builder.Build();

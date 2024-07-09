@@ -2,7 +2,7 @@
 @model LoginModel
 
 @{
-    ViewData["Title"] = "Acessar";
+    ViewData["Title"] = "Log in";
 }
 
 <h1>@ViewData["Title"]</h1>
@@ -10,7 +10,7 @@
     <div class="col-md-4">
         <section>
             <form id="account" method="post">
-                <h2>Utilize uma conta local para acessar.</h2>
+                <h2>Use a local account to log in.</h2>
                 <hr />
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-floating">
@@ -36,13 +36,13 @@
                 </div>
                 <div>
                     <p>
-                        <a id="forgot-password" asp-page="./ForgotPassword">Esqueceu sua senha?</a>
+                        <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
                     </p>
                     <p>
-                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Registrar novo usuário</a>
+                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
                     </p>
                     <p>
-                        <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Reenviar e-mail de confirmação</a>
+                        <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Resend email confirmation</a>
                     </p>
                 </div>
             </form>
@@ -50,7 +50,7 @@
     </div>
     <div class="col-md-6 col-md-offset-2">
         <section>
-            <h3>Utiliza outra forma de acessar.</h3>
+            <h3>Use another service to log in.</h3>
             <hr />
             @{
                 if ((Model.ExternalLogins?.Count ?? 0) == 0)

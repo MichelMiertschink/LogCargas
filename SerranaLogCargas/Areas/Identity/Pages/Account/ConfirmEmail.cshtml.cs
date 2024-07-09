@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.WebUtilities;
 
 namespace LogCargas.Areas.Identity.Pages.Account
 {
+    [AllowAnonymous]
     public class ConfirmEmailModel : PageModel
     {
         private readonly UserManager<IdentityUser> _userManager;

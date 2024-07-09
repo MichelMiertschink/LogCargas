@@ -29,7 +29,6 @@ namespace LogCargas.Areas.Identity.Pages.Account.Manage
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
-        [Display(Name = "Usuário")]
         public string Username { get; set; }
 
         /// <summary>
@@ -57,7 +56,7 @@ namespace LogCargas.Areas.Identity.Pages.Account.Manage
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
             [Phone]
-            [Display(Name = "Número de Celular")]
+            [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
         }
 
@@ -106,13 +105,13 @@ namespace LogCargas.Areas.Identity.Pages.Account.Manage
                 var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.PhoneNumber);
                 if (!setPhoneResult.Succeeded)
                 {
-                    StatusMessage = "Erro inexperado ao alterar número de celular.";
+                    StatusMessage = "Unexpected error when trying to set phone number.";
                     return RedirectToPage();
                 }
             }
 
             await _signInManager.RefreshSignInAsync(user);
-            StatusMessage = "Seu perfil foi atualizado";
+            StatusMessage = "Your profile has been updated";
             return RedirectToPage();
         }
     }

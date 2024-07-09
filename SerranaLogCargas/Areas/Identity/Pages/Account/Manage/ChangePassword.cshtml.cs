@@ -54,7 +54,7 @@ namespace LogCargas.Areas.Identity.Pages.Account.Manage
             /// </summary>
             [Required]
             [DataType(DataType.Password)]
-            [Display(Name = "Senha atual")]
+            [Display(Name = "Current password")]
             public string OldPassword { get; set; }
 
             /// <summary>
@@ -62,9 +62,9 @@ namespace LogCargas.Areas.Identity.Pages.Account.Manage
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
             [Required]
-            [StringLength(100, ErrorMessage = "A senha {0} deve ter no mínimo {2} e no máximo {1} caracteres.", MinimumLength = 6)]
+            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
             [DataType(DataType.Password)]
-            [Display(Name = "Nova senha")]
+            [Display(Name = "New password")]
             public string NewPassword { get; set; }
 
             /// <summary>
@@ -72,8 +72,8 @@ namespace LogCargas.Areas.Identity.Pages.Account.Manage
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
             [DataType(DataType.Password)]
-            [Display(Name = "Confirme a nova senha")]
-            [Compare("NewPassword", ErrorMessage = "As senhas não conferem.")]
+            [Display(Name = "Confirm new password")]
+            [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
         }
 
@@ -82,7 +82,7 @@ namespace LogCargas.Areas.Identity.Pages.Account.Manage
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"Não foi possível encontrar o ID do usuário '{_userManager.GetUserId(User)}'.");
+                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
             var hasPassword = await _userManager.HasPasswordAsync(user);

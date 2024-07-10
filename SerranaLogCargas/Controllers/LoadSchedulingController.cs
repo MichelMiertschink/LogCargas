@@ -86,7 +86,7 @@ namespace LogCargas.Controllers
 
             try
             {
-                loadScheduling.IncludeDate = DateTime.Now;
+                loadScheduling.CreatedAt = DateTime.Now;
                 await _loadSchedulingService.InsertAsync(loadScheduling);
                 return RedirectToAction(nameof(Index));
             }

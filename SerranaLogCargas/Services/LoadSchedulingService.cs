@@ -21,7 +21,7 @@ namespace LogCargas.Services
                 .Include(cityOrigin => cityOrigin.CityOrigin)
                 .Include(customerId => customerId.Customer)
                 .Include(driverId => driverId.Driver)
-                .OrderByDescending(x => x.IncludeDate)
+                .OrderByDescending(x => x.CreatedAt)
                 .ToListAsync();
         }
 
@@ -31,12 +31,12 @@ namespace LogCargas.Services
             var result = from obj in _context.LoadScheduling select obj;
             if (minDate.HasValue)
             {
-                result = result.Where(x => x.IncludeDate.Date >= minDate.Value);
+                result = result.Where(x => x.CreatedAt.Date >= minDate.Value);
             }
 
             if (maxDate.HasValue)
             {
-                result = result.Where(x => x.IncludeDate.Date <= maxDate.Value);
+                result = result.Where(x => x.CreatedAt.Date <= maxDate.Value);
             }
 
             return await result
@@ -77,8 +77,6 @@ namespace LogCargas.Services
 
         public async Task InsertAsync(LoadScheduling loadScheduling)
         {
-
-            loadScheduling.IncludeDate = DateTime.Now;
             _context.Add(loadScheduling);
             await _context.SaveChangesAsync();
         }

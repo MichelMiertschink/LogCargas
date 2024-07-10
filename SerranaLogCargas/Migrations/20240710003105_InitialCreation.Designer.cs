@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LogCargas.Migrations
 {
     [DbContext(typeof(LogCargasContext))]
-    [Migration("20240627235431_InitialCreation")]
+    [Migration("20240710003105_InitialCreation")]
     partial class InitialCreation
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -48,16 +48,13 @@ namespace LogCargas.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("CNPJ")
-                        .IsRequired()
                         .HasMaxLength(15)
                         .HasColumnType("varchar(15)");
 
                     b.Property<string>("CorporateReason")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("CostCenter")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");
@@ -77,7 +74,6 @@ namespace LogCargas.Migrations
                         .HasColumnType("varchar(11)");
 
                     b.Property<string>("CelPhone")
-                        .IsRequired()
                         .HasMaxLength(11)
                         .HasColumnType("varchar(11)");
 
@@ -111,6 +107,9 @@ namespace LogCargas.Migrations
                     b.Property<int>("ContractId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime(6)");
+
                     b.Property<bool>("Cte")
                         .HasColumnType("tinyint(1)");
 
@@ -120,11 +119,11 @@ namespace LogCargas.Migrations
                     b.Property<int>("DriverId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("IncludeDate")
-                        .HasColumnType("datetime(6)");
-
                     b.Property<bool>("Monitoring")
                         .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("OwnerID")
+                        .HasColumnType("longtext");
 
                     b.Property<bool>("PD")
                         .HasColumnType("tinyint(1)");
@@ -136,6 +135,9 @@ namespace LogCargas.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("UnloadDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime(6)");
 
                     b.Property<int>("VehicleType")
@@ -173,7 +175,6 @@ namespace LogCargas.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Acronym")
-                        .IsRequired()
                         .HasMaxLength(2)
                         .HasColumnType("varchar(2)");
 

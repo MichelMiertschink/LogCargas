@@ -1,16 +1,12 @@
 ﻿using LogCargas.Models.Enums;
 using System.ComponentModel.DataAnnotations;
+using WebBase.Models;
 
 namespace LogCargas.Models
 {
-    public class LoadScheduling
+    public class LoadScheduling : ModelBase
     {
-        [Key]
-        public int Id { get; set; }
-        [Display(Name ="Dt. Inclusão")]
-        [DataType(DataType.DateTime)]
-        public DateTime IncludeDate { get; set; }
-
+       
         [Display(Name = "BOL")]
         public bool Bol {  get; set; }
 
@@ -83,28 +79,6 @@ namespace LogCargas.Models
         {
         }
 
-        public LoadScheduling(int id, DateTime includeDate, bool bol, Customer customer, City cityOrigin, City cityDestiny, DateTime unloadDate, bool pD, Driver driver, VehicleType vehicleType, RiskManagement? riskManagement, bool checkList, bool monitoring, float weigth, float vlTranspor, float vlContract, float vladvance, bool pay, int contractId, bool cte)
-        {
-            Id = id;
-            IncludeDate = includeDate;
-            Bol = bol;
-            Customer = customer;
-            CityOrigin = cityOrigin;
-            CityDestiny = cityDestiny;
-            UnloadDate = unloadDate;
-            PD = pD;
-            Driver = driver;
-            VehicleType = vehicleType;
-            RiskManagement = riskManagement;
-            CheckList = checkList;
-            Monitoring = monitoring;
-            Weigth = weigth;
-            VlTranspor = vlTranspor;
-            VlContract = vlContract;
-            Vladvance = vladvance;
-            Pay = pay;
-            ContractId = contractId;
-            Cte = cte;
-        }
+
     }
 }

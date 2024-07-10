@@ -37,7 +37,7 @@
     <thead>
         <tr class="table-active table-primary">
             <th>
-                @Html.DisplayNameFor(model => model.IncludeDate)
+                @Html.DisplayNameFor(model => model.CreatedAt)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Customer)
@@ -76,7 +76,7 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.IncludeDate)
+                    @Html.DisplayFor(modelItem => item.CreatedAt)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Customer.CorporateReason)

@@ -73,11 +73,11 @@ namespace LogCargas.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    CNPJ = table.Column<string>(type: "varchar(15)", maxLength: 15, nullable: false)
+                    CNPJ = table.Column<string>(type: "varchar(15)", maxLength: 15, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    CorporateReason = table.Column<string>(type: "longtext", nullable: false)
+                    CorporateReason = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    CostCenter = table.Column<string>(type: "longtext", nullable: false)
+                    CostCenter = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
@@ -96,7 +96,7 @@ namespace LogCargas.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     CPF = table.Column<string>(type: "varchar(11)", maxLength: 11, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    CelPhone = table.Column<string>(type: "varchar(11)", maxLength: 11, nullable: false)
+                    CelPhone = table.Column<string>(type: "varchar(11)", maxLength: 11, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
@@ -111,7 +111,7 @@ namespace LogCargas.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Acronym = table.Column<string>(type: "varchar(2)", maxLength: 2, nullable: false)
+                    Acronym = table.Column<string>(type: "varchar(2)", maxLength: 2, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Name = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4")
@@ -301,7 +301,6 @@ namespace LogCargas.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    IncludeDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     Bol = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     CustomerId = table.Column<int>(type: "int", nullable: false),
                     CityOriginId = table.Column<int>(type: "int", nullable: false),
@@ -319,7 +318,11 @@ namespace LogCargas.Migrations
                     Vladvance = table.Column<float>(type: "float", nullable: false),
                     Pay = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     ContractId = table.Column<int>(type: "int", nullable: false),
-                    Cte = table.Column<bool>(type: "tinyint(1)", nullable: false)
+                    Cte = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    OwnerID = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false)
                 },
                 constraints: table =>
                 {

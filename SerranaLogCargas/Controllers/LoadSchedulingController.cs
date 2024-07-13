@@ -183,7 +183,7 @@ namespace LogCargas.Controllers
             {
                 return RedirectToAction(nameof(Error), new
                 {
-                    message = "----- ID não fornecido  = ID: " + loadScheduling.Id.ToString()
+                    message = "ID não fornecido = ID: " + loadScheduling.Id.ToString()
                 });
             }
 

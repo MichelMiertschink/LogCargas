@@ -28,9 +28,8 @@ namespace LogCargas.Authorization
         public static readonly string ApproveOperationName = "Approve";
         public static readonly string RejectOperationName = "Reject";
 
-        public static readonly string ContactAdministratorsRole =
-                                                              "ContactAdministrators";
-        public static readonly string ContactManagersRole = "ContactManagers";
+        public static readonly string AdministratorsRole = "Administrators";
+        public static readonly string ManagersRole = "Managers";
     }
 }
 

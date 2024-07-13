@@ -6,6 +6,7 @@ using Microsoft.Extensions.Options;
 using MySqlConnector;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using LogCargas.Authorization;
 
 namespace LogCargas
 {
@@ -59,6 +60,16 @@ namespace LogCargas
             });
 
             builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
+
+            // Authorization handlers.
+            builder.Services.AddScoped<IAuthorizationHandler,
+                                  IsOwnerAuthorizationHandler>();
+
+            builder.Services.AddSingleton<IAuthorizationHandler,
+                                  AdministratorsAuthorizationHandler>();
+
+            builder.Services.AddSingleton<IAuthorizationHandler,
+                                  ManagerAuthorizationHandler>();
 
             var app = builder.Build();
 

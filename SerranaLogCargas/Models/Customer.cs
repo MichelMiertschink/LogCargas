@@ -14,13 +14,13 @@ namespace LogCargas.Models
         public string CorporateReason { get; set; }
 
         [Display(Name ="CCusto")]
-        public string CostCenter { get; set; }
+        public string? CostCenter { get; set; }
 
         public Customer() 
         {
         }
 
-        public Customer(int id, string corporateReason, string cnpj, string costCenter)
+        public Customer(int id, string corporateReason, string cnpj, string? costCenter)
         {
             Id = id;
             CorporateReason = corporateReason;

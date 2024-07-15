@@ -7,16 +7,20 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using LogCargas.Data;
 using LogCargas.Models;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using LogCargas.Services;
 
 namespace LogCargas.Controllers
 {
     public class CustomersController : Controller
     {
         private readonly LogCargasContext _context;
+        private readonly CustomerService _customerService;
 
-        public CustomersController(LogCargasContext context)
+        public CustomersController(LogCargasContext context, CustomerService customerService)
         {
             _context = context;
+            _customerService = customerService;
         }
 
         // GET: Customers
@@ -158,6 +162,24 @@ namespace LogCargas.Controllers
         private bool CustomerExists(int id)
         {
           return (_context.Customers?.Any(e => e.Id == id)).GetValueOrDefault();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ImportCustomers(IFormFile formFile)
+        {
+            if (ModelState.IsValid)
+            {
+                var streamFile = _customerService.LerStream(formFile);
+                var customers = _customerService.LerXls(streamFile);
+                 _customerService.SalvarImportacao(customers);
+
+                return RedirectToAction(nameof(Index));
+            }
+            else
+            {
+                return RedirectToAction(nameof(Index));
+            }
         }
     }
 }

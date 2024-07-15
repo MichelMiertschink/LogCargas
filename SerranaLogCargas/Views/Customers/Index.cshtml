@@ -9,6 +9,14 @@
 <p>
     <a asp-action="Create" class="btn btn-primary">Novo</a>
 </p>
+<div class="d-flex">
+    <form method="post" asp-action="ImportCustomers" enctype="multipart/form-data">
+        <div class="input-group">
+            <input class="form-control" type="file" name="formFile">
+            <button class="btn btn-secondary" type="submit">Importar Clientes</button>
+        </div>
+    </form>
+</div>
 <table class="table table-dark table-striped table-hover">
     <thead>
         <tr>

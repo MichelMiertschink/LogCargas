@@ -9,6 +9,7 @@ using LogCargas.Data;
 using LogCargas.Models;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using LogCargas.Services;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace LogCargas.Controllers
 {
@@ -163,6 +164,7 @@ namespace LogCargas.Controllers
         {
           return (_context.Customers?.Any(e => e.Id == id)).GetValueOrDefault();
         }
+             
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -172,7 +174,7 @@ namespace LogCargas.Controllers
             {
                 var streamFile = _customerService.LerStream(formFile);
                 var customers = _customerService.LerXls(streamFile);
-                 _customerService.SalvarImportacao(customers);
+                await _customerService.SalvarImportacao(customers);
 
                 return RedirectToAction(nameof(Index));
             }

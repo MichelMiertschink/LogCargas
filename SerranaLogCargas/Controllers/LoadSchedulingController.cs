@@ -77,7 +77,7 @@ namespace LogCargas.Controllers
         {
             if (ModelState.IsValid)
             {
-                var customers = _customerService.FindAll();
+                var customers = await _customerService.FindAllAsync();
                 var cities = await _cityService.FindAllAsync();
                 var drivers = await _driverService.FindAllAsync();
                 var viewModel = new LoadSchedulingFormViewModel { Customer = customers, City = cities, Driver = drivers };

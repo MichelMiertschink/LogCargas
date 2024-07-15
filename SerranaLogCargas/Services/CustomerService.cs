@@ -3,6 +3,7 @@ using LogCargas.Data;
 using LogCargas.Models;
 using System.ComponentModel;
 using OfficeOpenXml;
+using Microsoft.AspNetCore.Mvc;
 
 namespace LogCargas.Services
 {
@@ -17,16 +18,15 @@ namespace LogCargas.Services
         {
             return await _context.Customers.ToListAsync();
         }
-
-        public List<Customer> FindAll()
+        public async Task InsertAsync(Customer customer)
         {
-            return _context.Customers.ToList();
+            _context.Add(customer);
+            await _context.SaveChangesAsync();
         }
 
-        public async Task InsertAsync(Customer obj)
+        private bool CustomerCnpjExists(string customerCnpj)
         {
-            _context.Add(obj);
-            await _context.SaveChangesAsync();
+            return (_context.Customers?.Any(e => e.CNPJ == customerCnpj)).GetValueOrDefault();
         }
 
         // Importar arquivo de clientes (Excel)
@@ -77,14 +77,21 @@ namespace LogCargas.Services
             }
         }
 
-        public void SalvarImportacao(List<Customer> customers)
+        public async Task SalvarImportacao(List<Customer> customers)
         {
             try
             {
                 foreach (var customer in customers)
                 {
-                    _context.Add(customer);
-                    _context.SaveChangesAsync();
+                    if (!CustomerCnpjExists(customer.CNPJ))
+                    {
+                        _context.Add(customer);
+                        await _context.SaveChangesAsync();
+                    } else
+                    {
+                        _context.Update(customer);
+                        await _context.SaveChangesAsync();
+                    }
                 }
             }
             catch (Exception ex)

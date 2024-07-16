@@ -6,7 +6,6 @@ namespace LogCargas.Models
     {
         [Key]
         public int Id { get; set; }
-        [Key]
         [Display(Name = "CNPJ")]
         [StringLength(15, ErrorMessage = "Tamanho informado incorreto")]
         //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "###.###.###/####-##")]

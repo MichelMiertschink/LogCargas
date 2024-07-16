@@ -5,6 +5,15 @@
 <h1>Configurações gerais</h1>
 <div class="row shadow-lg">
     <div class="col-md-6">
+        <div class="d-flex">
+            <form method="post" asp-action="ImportCities" enctype="multipart/form-data">
+                <div class="input-group">
+                    <input class="form-control" type="file" name="formFile">
+                    <button class="btn btn-secondary" type="submit">Importar Cidades</button>
+                </div>
+            </form>
+        </div>
+        <hr />
         <br />
         <h1>Outras importações</h1>
         <div class="form-group">

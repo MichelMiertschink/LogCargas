@@ -2,6 +2,7 @@
 using LogCargas.Data;
 using LogCargas.Models;
 using LogCargas.Services.Exceptions;
+using OfficeOpenXml;
 
 namespace LogCargas.Services
 {
@@ -60,6 +61,72 @@ namespace LogCargas.Services
             catch (DbConcurrencyException e)
             {
                 throw new DbConcurrencyException(e.Message);
+            }
+        }
+        // importação das cidades
+
+        // Importar arquivo Excel
+        public MemoryStream LerStream(IFormFile formFile)
+        {
+            using (var stream = new MemoryStream())
+            {
+                formFile?.CopyTo(stream);
+                var ListBytes = stream.ToArray();
+                return new MemoryStream(ListBytes);
+            }
+        }
+
+        // Ler a stream do arquivo e criar a lista
+        public List<City> LerXls(MemoryStream stream)
+        {
+            try
+            {
+                var resposta = new List<City>();
+                ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
+
+                using (ExcelPackage package = new ExcelPackage(stream))
+                {
+                    ExcelWorksheet worksheet = package.Workbook.Worksheets[0];
+                    int numeroLinhas = worksheet.Dimension.End.Row;
+
+                    for (int linha = 2; linha <= numeroLinhas; linha++)
+                    {
+                        var city = new City();
+
+                        if (worksheet.Cells[linha, 1].Value != null
+                            && worksheet.Cells[linha, 2].Value != null)
+                        {
+                            city.Id = 0;
+                            city.Name = worksheet.Cells[linha, 1].Value.ToString();
+                            city.StateId = Convert.ToInt32(worksheet.Cells[linha, 2].Value);
+
+                            resposta.Add(city);
+                        }
+                    }
+                }
+                return resposta;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task SalvarImportacao(List<City> cities)
+        {
+            try
+            {
+                foreach (var city in cities)
+                {
+                    _context.Add(cities);
+                    await _context.SaveChangesAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                {
+                    throw new Exception(ex.Message);
+                }
             }
         }
     }

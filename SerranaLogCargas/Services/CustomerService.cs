@@ -40,6 +40,7 @@ namespace LogCargas.Services
             }
         }
 
+        // Ler a stream do arquivo e criar a lista
         public List<Customer> LerXls(MemoryStream stream)
         {
             try
@@ -76,7 +77,8 @@ namespace LogCargas.Services
                 throw new Exception(ex.Message);
             }
         }
-
+        
+        // Salvar a importação, se não existir o CNPJ
         public async Task SalvarImportacao(List<Customer> customers)
         {
             try

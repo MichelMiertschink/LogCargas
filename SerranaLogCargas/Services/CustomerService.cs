@@ -24,12 +24,7 @@ namespace LogCargas.Services
             await _context.SaveChangesAsync();
         }
 
-        private bool CustomerCnpjExists(string customerCnpj)
-        {
-            return (_context.Customers?.Any(e => e.CNPJ == customerCnpj)).GetValueOrDefault();
-        }
-
-        // Importar arquivo de clientes (Excel)
+       // Importar arquivo de clientes (Excel)
         public MemoryStream LerStream(IFormFile formFile)
         {
             using (var stream = new MemoryStream())
@@ -85,7 +80,8 @@ namespace LogCargas.Services
             {
                 foreach (var customer in customers)
                 {
-                    if (!CustomerCnpjExists(customer.CNPJ))
+                    bool hasAny = await _context.Customers.AnyAsync(x => x.CNPJ == customer.CNPJ);
+                    if (!hasAny)
                     {
                         _context.Add(customer);
                         await _context.SaveChangesAsync();

@@ -135,5 +135,23 @@ namespace LogCargas.Controllers
             };
             return View(viewModel);
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ImportDrivers(IFormFile formFile)
+        {
+            if (ModelState.IsValid)
+            {
+                var streamFile = _driverService.LerStream(formFile);
+                var drivers= _driverService.LerXls(streamFile);
+                await _driverService.SalvarImportacao(drivers);
+
+                return RedirectToAction(nameof(Index));
+            }
+            else
+            {
+                return RedirectToAction(nameof(Index));
+            }
+        }
     }
 }

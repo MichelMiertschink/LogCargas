@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LogCargas.Migrations
 {
     [DbContext(typeof(LogCargasContext))]
-    [Migration("20240627235431_InitialCreation")]
+    [Migration("20240717122254_InitialCreation")]
     partial class InitialCreation
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,6 +33,9 @@ namespace LogCargas.Migrations
 
                     b.Property<int>("StateId")
                         .HasColumnType("int");
+
+                    b.Property<string>("codIbge")
+                        .HasColumnType("longtext");
 
                     b.HasKey("Id");
 
@@ -57,7 +60,6 @@ namespace LogCargas.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<string>("CostCenter")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");

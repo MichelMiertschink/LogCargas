@@ -17,18 +17,19 @@ namespace LogCargas.Models
         
         [Display(Name = "Estado")]
         public int StateId { get; set; }
-
-        // Colocar campo para o código IBGE
+        [Display(Name = "Código IBGE")]
+        public string? CodIbge { get; set; }
         
         public City()
         {
         }
 
-        public City(int id, string name, State state)
+        public City(int id, string name, State state, string? codIbge)
         {
             Id = id;
             Name = name;
             State = state;
+            CodIbge = codIbge;
         }
     }
 }

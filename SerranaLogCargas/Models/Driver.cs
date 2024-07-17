@@ -17,16 +17,16 @@ namespace LogCargas.Models
         public string CPF { get; set; }
 
         [Display(Name ="Celular")]
-        [StringLength(11, ErrorMessage = "Tamanho informado incorreto")]
+        [StringLength(20, ErrorMessage = "Tamanho informado incorreto")]
         [DataType(DataType.PhoneNumber)]
         //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "##-#####-####")]
-        public string CelPhone { get; set; }
+        public string? CelPhone { get; set; }
 
         public Driver ()
         {
         }
 
-        public Driver(int id, string name, string cPF, string celPhone)
+        public Driver(int id, string name, string cPF, string? celPhone)
         {
             Id = id;
             Name = name;

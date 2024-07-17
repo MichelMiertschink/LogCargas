@@ -98,12 +98,12 @@ namespace LogCargas.Services
                     {
                         var city = new City();
 
-                        if (worksheet.Cells[linha, 1].Value != null
-                            && worksheet.Cells[linha, 2].Value != null)
+                        if (worksheet.Cells[linha, 3].Value != null)
                         {
                             city.Id = 0;
                             city.Name = worksheet.Cells[linha, 1].Value.ToString();
-                            city.StateId = int.Parse(worksheet.Cells[linha, 2].Value.ToString());
+                            city.StateId = Convert.ToInt32(worksheet.Cells[linha, 2].Value.ToString());
+                            city.CodIbge = worksheet.Cells[linha, 3].Value.ToString();
 
                             resposta.Add(city);
                         }
@@ -124,7 +124,7 @@ namespace LogCargas.Services
             {
                 foreach (var city in cities)
                 {
-                    bool hasAny = await _context.Cities.AnyAsync(x => x.Name == city.Name);
+                    bool hasAny = await _context.Cities.AnyAsync(x => x.CodIbge == city.CodIbge);
                     if (!hasAny)
                     {
                         await InsertAsync(city);

@@ -32,6 +32,9 @@ namespace LogCargas.Migrations
                     b.Property<int>("StateId")
                         .HasColumnType("int");
 
+                    b.Property<string>("codIbge")
+                        .HasColumnType("longtext");
+
                     b.HasKey("Id");
 
                     b.HasIndex("StateId");
@@ -55,7 +58,6 @@ namespace LogCargas.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<string>("CostCenter")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");

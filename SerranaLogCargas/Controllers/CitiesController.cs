@@ -45,39 +45,6 @@ namespace LogCargas.Controllers
             await _cityService.InsertAsync(city);
             return RedirectToAction(nameof(Index));
         }
-
-        // GET: Cities/Delete
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return RedirectToAction(nameof(Error), new { message = "ID não fornecido" });
-            }
-
-            var city = await _cityService.FindByIdAsync(id.Value);
-            if (city == null)
-            {
-                return RedirectToAction(nameof(Error), new { message = "ID não encontrado" });
-            }
-            
-            return View(city);
-        }
-
-        // POST: Cities/Delete
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Delete(int id)
-        {
-            try
-            {
-                await _cityService.Remove(id);
-                return RedirectToAction(nameof(Index));
-            } 
-            catch (Exception e) 
-            {
-                return RedirectToAction(nameof(Error), new { message = "Não é possível excluir, pois  a cidade possui CARGA cadastrada." });
-            }
-        }
         
         // GET: Cities/Details
         public async Task<IActionResult> Details(int? id)
@@ -136,6 +103,39 @@ namespace LogCargas.Controllers
             catch (ApplicationException e)
             {
                 return RedirectToAction(nameof(Error), new { message = e.Message });
+            }
+        }
+
+        // GET: Cities/Delete
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return RedirectToAction(nameof(Error), new { message = "ID não fornecido" });
+            }
+
+            var city = await _cityService.FindByIdAsync(id.Value);
+            if (city == null)
+            {
+                return RedirectToAction(nameof(Error), new { message = "ID não encontrado" });
+            }
+
+            return View(city);
+        }
+
+        // POST: Cities/Delete
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(int id)
+        {
+            try
+            {
+                await _cityService.Remove(id);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction(nameof(Error), new { message = "Não é possível excluir, pois  a cidade possui CARGA cadastrada." });
             }
         }
 

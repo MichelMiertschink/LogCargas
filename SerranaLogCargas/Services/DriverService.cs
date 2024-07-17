@@ -21,17 +21,24 @@ namespace LogCargas.Services
             return await _context.Driver.OrderBy(x => x.Name).ToListAsync();
         }
 
-        public async Task InsertAsync(Driver obj)
-        {
-            _context.Add(obj);
-            await _context.SaveChangesAsync();
-        }
-
         public async Task<Driver> FindByIdAsync(int id)
         {
             return await _context.Driver.FirstOrDefaultAsync(obj => obj.Id == id);
         }
 
+        public async Task<Driver> FindByCpfAsync(string cpf)
+        {
+            return await _context.Driver.FirstOrDefaultAsync(obj => obj.CPF == cpf);
+        }
+
+        // Create
+        public async Task InsertAsync(Driver obj)
+        {
+            _context.Add(obj);
+            await _context.SaveChangesAsync();
+        }
+                
+        // Edit
         public async Task UpdateAsync (Driver driver)
         {
             bool hasAny = await _context.Driver.AnyAsync(x => x.Id == driver.Id);
@@ -51,6 +58,7 @@ namespace LogCargas.Services
             }
         }
 
+        // Delete
         public async Task Remove (int id)
         {
             var driver = _context.Driver.Find(id);
@@ -117,13 +125,13 @@ namespace LogCargas.Services
                     bool hasAny = await  _context.Driver.AnyAsync(x => x.CPF == driver.CPF);
                     if (!hasAny)
                     {
-                        _context.Add(driver);
-                        await _context.SaveChangesAsync();
+                        InsertAsync(driver);
                     }
                     else
                     {
-                        _context.Update(driver);
-                        await _context.SaveChangesAsync();
+                        Driver obj = await FindByCpfAsync(driver.CPF);
+                        driver.Id = obj.Id;
+                        await UpdateAsync(driver);
                     }
                 }
             }

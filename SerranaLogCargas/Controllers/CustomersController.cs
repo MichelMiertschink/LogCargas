@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+using LogCargas.Models.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using LogCargas.Data;
 using LogCargas.Models;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using LogCargas.Services;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
+using System.Diagnostics;
 
 namespace LogCargas.Controllers
 {
@@ -27,27 +26,8 @@ namespace LogCargas.Controllers
         // GET: Customers
         public async Task<IActionResult> Index()
         {
-              return _context.Customers != null ? 
-                          View(await _context.Customers.ToListAsync()) :
-                          Problem("Entity set 'LogCargasContext.Customers'  is null.");
-        }
-
-        // GET: Customers/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null || _context.Customers == null)
-            {
-                return NotFound();
-            }
-
-            var customer = await _context.Customers
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (customer == null)
-            {
-                return NotFound();
-            }
-
-            return View(customer);
+            var list = await _customerService.FindAllAsync();
+            return View(list);
         }
 
         // GET: Customers/Create
@@ -57,90 +37,87 @@ namespace LogCargas.Controllers
         }
 
         // POST: Customers/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,CNPJ,CorporateReason,CostCenter")] Customer customer)
+        public async Task<IActionResult> Create(Customer customer)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(customer);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+               await _customerService.InsertAsync(customer);
+               return RedirectToAction(nameof(Index));
             }
             return View(customer);
+        }
+
+        // GET: Customers/Details/5
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return RedirectToAction(nameof(Error), new { message = "ID não fornecido" });
+            }
+
+            var obj = await _customerService.FindByIdAsync(id.Value);
+            if (obj == null)
+            {
+                return RedirectToAction(nameof(Error), new { message = "ID não encontrado" });
+            }
+
+            return View(obj);
         }
 
         // GET: Customers/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Customers == null)
+            if (id == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "ID não fornecido" });
             }
 
-            var customer = await _context.Customers.FindAsync(id);
+            var customer = await _customerService.FindByIdAsync(id.Value);
             if (customer == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "ID não encontrada" });
             }
             return View(customer);
         }
 
         // POST: Customers/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,CNPJ,CorporateReason,CostCenter")] Customer customer)
+        public async Task<IActionResult> Edit(int id, Customer customer)
         {
-            if (id != customer.Id)
-            {
-                return NotFound();
-            }
-
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(customer);
-                    await _context.SaveChangesAsync();
+                    await _customerService.UpdateAsync(customer);
                 }
-                catch (DbUpdateConcurrencyException)
+                catch (ApplicationException e)
                 {
-                    if (!CustomerExists(customer.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    return RedirectToAction(nameof(Error), new { message = e.Message });
                 }
-                return RedirectToAction(nameof(Index));
             }
-            return View(customer);
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Customers/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Customers == null)
+            if (id == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "ID não fornecido" });
             }
 
-            var customer = await _context.Customers
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var customer = await _customerService.FindByIdAsync(id.Value);
             if (customer == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "ID não encontrado" });
             }
 
             return View(customer);
         }
-
+        
         // POST: Customers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -160,12 +137,6 @@ namespace LogCargas.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CustomerExists(int id)
-        {
-          return (_context.Customers?.Any(e => e.Id == id)).GetValueOrDefault();
-        }
-             
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ImportCustomers(IFormFile formFile)
@@ -182,6 +153,16 @@ namespace LogCargas.Controllers
             {
                 return RedirectToAction(nameof(Index));
             }
+        }
+
+        public IActionResult Error(string message)
+        {
+            var viewModel = new ErrorViewModel
+            {
+                Message = message,
+                RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
+            };
+            return View(viewModel);
         }
     }
 }

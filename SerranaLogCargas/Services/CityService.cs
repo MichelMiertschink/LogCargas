@@ -3,6 +3,8 @@ using LogCargas.Data;
 using LogCargas.Models;
 using LogCargas.Services.Exceptions;
 using OfficeOpenXml;
+using Microsoft.AspNetCore.Mvc;
+
 
 namespace LogCargas.Services
 {
@@ -28,6 +30,11 @@ namespace LogCargas.Services
         public async Task<City> FindByIdAsync(int id)
         {
             return await _context.Cities.Include(obj => obj.State).FirstOrDefaultAsync(obj => obj.Id == id);
+        }
+
+        public async Task<City> FindByNameAsync(string name)
+        {
+            return await _context.Cities.Include(obj => obj.State).FirstOrDefaultAsync(obj => obj.Name == name);
         }
 
 
@@ -63,7 +70,6 @@ namespace LogCargas.Services
                 throw new DbConcurrencyException(e.Message);
             }
         }
-        // importação das cidades
 
         // Importar arquivo Excel
         public MemoryStream LerStream(IFormFile formFile)
@@ -76,7 +82,6 @@ namespace LogCargas.Services
             }
         }
 
-        // Ler a stream do arquivo e criar a lista
         public List<City> LerXls(MemoryStream stream)
         {
             try
@@ -98,12 +103,13 @@ namespace LogCargas.Services
                         {
                             city.Id = 0;
                             city.Name = worksheet.Cells[linha, 1].Value.ToString();
-                            city.StateId = Convert.ToInt32(worksheet.Cells[linha, 2].Value);
+                            city.StateId = int.Parse(worksheet.Cells[linha, 2].Value.ToString());
 
                             resposta.Add(city);
                         }
                     }
                 }
+
                 return resposta;
             }
             catch (Exception ex)
@@ -118,8 +124,17 @@ namespace LogCargas.Services
             {
                 foreach (var city in cities)
                 {
-                    _context.Add(cities);
-                    await _context.SaveChangesAsync();
+                    bool hasAny = await _context.Cities.AnyAsync(x => x.Name == city.Name);
+                    if (!hasAny)
+                    {
+                        await InsertAsync(city);
+                    }
+                    else
+                    {
+                        City obj = await FindByNameAsync(city.Name);
+                        city.Id = obj.Id;
+                        await UpdateAsync(city);
+                    }
                 }
             }
             catch (Exception ex)

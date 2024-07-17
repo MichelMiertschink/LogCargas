@@ -10,6 +10,8 @@ namespace LogCargas.Data
         public LogCargasContext (DbContextOptions<LogCargasContext> options)
             :base(options) 
         {
+            ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+            ChangeTracker.AutoDetectChangesEnabled = false;
         }
         public DbSet<State> States { get; set; } = default!;
         public DbSet<City> Cities {  get; set; } = default!;

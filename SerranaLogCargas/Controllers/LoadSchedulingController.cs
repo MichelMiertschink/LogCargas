@@ -14,7 +14,7 @@ namespace LogCargas.Controllers
         private readonly CityService _cityService;
         private readonly DriverService _driverService;
 
-        public LoadSchedulingController(LoadSchedulingService loadScheduling, CustomerService customerService, CityService cityService , DriverService driverService)
+        public LoadSchedulingController(LoadSchedulingService loadScheduling, CustomerService customerService, CityService cityService, DriverService driverService)
         {
             _loadSchedulingService = loadScheduling;
             _customerService = customerService;
@@ -48,7 +48,7 @@ namespace LogCargas.Controllers
         //Busca por cidade de origem
         public async Task<IActionResult> CityOriginSearch(City? cityOrigin)
         {
-            
+
             var result = await _loadSchedulingService.FindByCityOriginAsync(cityOrigin);
             return View(result);
         }
@@ -61,12 +61,12 @@ namespace LogCargas.Controllers
                 var customers = await _customerService.FindAllAsync();
                 var cities = await _cityService.FindAllAsync();
                 var drivers = await _driverService.FindAllAsync();
-                var viewModel = new LoadSchedulingFormViewModel { Customer = customers, City = cities, Driver = drivers};
+                var viewModel = new LoadSchedulingFormViewModel { Customer = customers, City = cities, Driver = drivers };
                 return View(viewModel);
             }
             catch (Exception e)
             {
-                return RedirectToAction(nameof(Error), new { message = e.Message});
+                return RedirectToAction(nameof(Error), new { message = e.Message });
             }
 
         }
@@ -95,10 +95,12 @@ namespace LogCargas.Controllers
 
                 return RedirectToAction(nameof(Error), new
                 {
-                    message = e.Message +
-                    "CustomerID: " + loadScheduling.CustomerId.ToString() +
-                    "\nOriginID: " + loadScheduling.CityDestinyId.ToString() +
-                    "\nDestinyID: " + loadScheduling.CityOriginId.ToString()
+                    message = e.Message + "\n" + 
+                    "Dados obrigatórios não preenchidos"
+                    + "Cliente: " + loadScheduling.CustomerId.ToString() 
+                    + "Origem : " + loadScheduling.CityDestinyId.ToString()
+                    + "Destino: " + loadScheduling.CityOriginId.ToString()
+                    + "Motorista: " + loadScheduling.DriverId.ToString()
                 });
             }
 
@@ -120,7 +122,7 @@ namespace LogCargas.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Delete (int id)
+        public async Task<IActionResult> Delete(int id)
         {
             try
             {
@@ -133,7 +135,7 @@ namespace LogCargas.Controllers
             }
         }
 
-        public async Task<IActionResult> Details (int? id)
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
@@ -167,7 +169,7 @@ namespace LogCargas.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit (int id, LoadScheduling loadScheduling)
+        public async Task<IActionResult> Edit(int id, LoadScheduling loadScheduling)
         {
             if (ModelState.IsValid)
             {
@@ -177,7 +179,7 @@ namespace LogCargas.Controllers
                 var drivers = await _driverService.FindAllAsync();
                 var viewModel = new LoadSchedulingFormViewModel { Customer = customers, City = cities, Driver = drivers };
                 return View(viewModel);
-                
+
             }
             if (id != loadScheduling.Id)
             {
@@ -191,7 +193,8 @@ namespace LogCargas.Controllers
             {
                 await _loadSchedulingService.UpdateAsync(loadScheduling);
                 return RedirectToAction(nameof(Index));
-            } catch (ApplicationException e)
+            }
+            catch (ApplicationException e)
             {
                 return RedirectToAction(nameof(Error), new { message = e.Message });
             }

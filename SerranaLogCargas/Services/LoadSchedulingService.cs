@@ -47,16 +47,19 @@ namespace LogCargas.Services
                 .ToListAsync();
         }
 
-        // Filtro pela origem OU destino OU motorista
+        // Filtro origem OU destino OU cliente OU motorista
         public async Task<IQueryable<LoadScheduling>> FindByOriginDestinyDriverAsync(string filter)
         {
-            var result = from obj in _context.LoadScheduling select obj;
+            var resultado = _context.LoadScheduling.AsNoTracking().AsQueryable();
             if (!string.IsNullOrEmpty(filter))
             {
-                result = result.Where(x => x.CityOrigin.Name.Contains(filter));
+                resultado = resultado.Where(c => c.CityOrigin.Name.Contains(filter) ||
+                                                 c.CityDestiny.Name.Contains(filter) ||
+                                                 c.Customer.CorporateReason.Contains(filter) ||
+                                                 c.Driver.Name.Contains(filter));
             }
 
-            return result.AsQueryable()
+            return resultado.AsQueryable()
                 .Include(cityDestiny => cityDestiny.CityDestiny)
                 .Include(cityOrigin => cityOrigin.CityOrigin)
                 .Include(customerId => customerId.Customer)

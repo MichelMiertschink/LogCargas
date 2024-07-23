@@ -33,7 +33,6 @@ namespace LogCargas.Controllers
             var model = await PagingList.CreateAsync(resultado.Result, 20, pageindex, sort, "Name");
             model.RouteValue = new RouteValueDictionary { { "filter", filter } };
             return View(model);
-
         }
 
 

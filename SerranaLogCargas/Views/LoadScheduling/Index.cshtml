@@ -10,15 +10,16 @@
 </p>
 <nav class="navbar navbar-expand-sm bg-dark" data-bs-theme="dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">Filtro</a>
+        <a class="navbar-brand" href="#">Filtros</a>
         <div class="collapse navbar-collapse" id="navbarColor01">
             <form class="d-flex" asp-action="SimpleSearch">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <button class="btn btn-primary btn-sm" asp-action="SimpleSearch">Data Inclusão</button>
+                        <button class="btn btn-primary btn-sm" asp-action="DateSearch">Data Inclusão</button>
                     </li>
+                    |
                     <li class="nav-item">
-                        <button class="btn btn-primary btn-sm" asp-action="CityOriginSearch">Origem</button>
+                        <button class="btn btn-primary btn-sm" asp-action="OthersSearch">Outros</button>
                     </li>
                 </ul>
             </form>
@@ -28,9 +29,6 @@
 <table class="table table-striped table-bordered table-hover table-bordered shadow table-sm">
     <thead>
         <tr class="table-active table-primary">
-            @*             <th>
-            @Html.DisplayNameFor(model => model.IncludeDate)
-            </th> *@
             <th>
                 @Html.DisplayNameFor(model => model.Bol)
             </th>

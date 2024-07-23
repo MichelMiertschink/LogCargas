@@ -31,7 +31,7 @@ namespace LogCargas.Controllers
         }
                 
         // Lista pela data de inclusão
-        public async Task<IActionResult> SimpleSearch(DateTime? minDate, DateTime? maxDate)
+        public async Task<IActionResult> DateSearch(DateTime? minDate, DateTime? maxDate)
         {
             if (!minDate.HasValue)
             {
@@ -48,14 +48,13 @@ namespace LogCargas.Controllers
         }
           
         //GET to index -- Paging and filter -- Buscar cidade de origem
-        public async Task<IActionResult> CityOriginSearch(string filter, int pageindex = 1, string sort = "IncludeDate")
+        public async Task<IActionResult> OthersSearch(string filter, int pageindex = 1, string sort = "IncludeDate")
         {
             var resultado = _loadSchedulingService.FindByOriginDestinyDriverAsync(filter);
             
-            var model = await PagingList.CreateAsync(resultado.Result, 20, pageindex, sort, "IncludeDate");
+            var model = await PagingList.CreateAsync(resultado.Result, 5, pageindex, sort, "IncludeDate");
             model.RouteValue = new RouteValueDictionary { { "filter", filter } };
             return View(model);
-
         }
 
         // GET: LoadScheduling/Create

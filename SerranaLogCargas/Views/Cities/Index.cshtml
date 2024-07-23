@@ -1,4 +1,4 @@
-﻿@model IEnumerable<LogCargas.Models.City>
+﻿@model ReflectionIT.Mvc.Paging.PagingList<LogCargas.Models.City>
 
 @{
     ViewData["Title"] = "Cidades";
@@ -8,7 +8,18 @@
 <p>
     <a asp-action="Create" class="btn btn-primary">Novo</a>
 </p>
-<table class="table table-dark table-striped table-hover">
+<nav class="navbar navbar-expand-sm bg-dark" data-bs-theme="dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Filtro</a>
+        <div class="collapse navbar-collapse" id="navbarColor01">
+            <form method="get" class="d-flex">
+                <input name="filter" class="form-control me-sm-2" placeholder="filtro" value="@Model.RouteValue["Filter"]"/>
+                <button type="submit" class="btn btn-secondary my-2 my-sm-0"> Procurar </button>
+             </form>
+         </div>
+    </div>
+</nav>
+<table class="table table-light table-striped table-hover">
     <thead>
         <tr>
             <th>
@@ -22,20 +33,25 @@
     </thead>
     <tbody>
         @foreach (var item in Model)
-        {
-            <tr>
+          {
+                           <tr>       
                 <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.State.Name)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id" class="badge bg-primary">Editar</a>
-                    <a asp-action="Details" asp-route-id="@item.Id" class="badge bg-secondary">Detalhes</a>
-                    <a asp-action="Delete" asp-route-id="@item.Id" class="badge bg-danger">Excluir</a>
-                </td>
+                                @Html.DisplayFor(modelItem => item.State.Name)
+                            </td>
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@item.Id" class="badge bg-primary">Editar</a>
+                                <a asp-action="Details" asp-route-id="@item.Id" class="badge bg-secondary">Detalhes</a>
+                                <a asp-action="Delete" asp-route-id="@item.Id" class="badge bg-danger">Excluir</a>
+                            </td>
             </tr>
         }
     </tbody>
 </table>
+
+<div>
+    <vc:pager paging-list="@Model"></vc:pager>
+</div>
+

@@ -21,6 +21,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.16" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="6.0.3" />
+    <PackageReference Include="ReflectionIT.Mvc.Paging" Version="8.0.0" />
   </ItemGroup>
 
   <ItemGroup>

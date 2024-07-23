@@ -6,6 +6,7 @@ using Microsoft.Extensions.Options;
 using MySqlConnector;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using ReflectionIT.Mvc.Paging;
 
 namespace LogCargas
 {
@@ -56,6 +57,13 @@ namespace LogCargas
                                  .RequireAuthenticatedUser()
                                  .Build();
                 config.Filters.Add(new AuthorizeFilter(policy));
+            });
+
+            // Paginação
+            builder.Services.AddPaging(options =>
+            {
+                options.ViewName = "Bootstrap4";
+                options.PageParameterName = "pageindex";
             });
 
             builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();

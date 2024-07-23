@@ -4,6 +4,8 @@ using LogCargas.Models;
 using LogCargas.Services.Exceptions;
 using OfficeOpenXml;
 using Microsoft.AspNetCore.Mvc;
+using ReflectionIT.Mvc.Paging;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 
 namespace LogCargas.Services
@@ -19,6 +21,16 @@ namespace LogCargas.Services
         public async Task<List<City>> FindAllAsync()
         {
             return await _context.Cities.Include(obj => obj.State).ToListAsync();
+        }
+
+        public async Task<IQueryable<City>> FindPagingAsync(string filter)
+        {
+            var resultado = _context.Cities.AsNoTracking().AsQueryable();
+            if (!string.IsNullOrEmpty(filter))
+            {
+                resultado = resultado.Where(p => p.Name.Contains(filter));
+            }
+            return resultado;
         }
 
         public async Task InsertAsync(City obj)

@@ -25,7 +25,7 @@ namespace LogCargas.Services
 
         public async Task<IQueryable<City>> FindPagingAsync(string filter)
         {
-            var resultado = _context.Cities.AsNoTracking().AsQueryable();
+            var resultado = _context.Cities.Include(obj => obj.State).AsNoTracking().AsQueryable();
             if (!string.IsNullOrEmpty(filter))
             {
                 resultado = resultado.Where(p => p.Name.Contains(filter));

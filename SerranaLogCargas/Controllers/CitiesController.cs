@@ -30,13 +30,11 @@ namespace LogCargas.Controllers
 
         public async Task<IActionResult> Index(string filter, int pageindex = 1, string sort = "Name")
         {
-            var resultado = _context.Cities.AsNoTracking().AsQueryable();
+            var resultado = _context.Cities.Include(obj => obj.State).AsNoTracking().AsQueryable();
             if (!string.IsNullOrEmpty(filter))
             {
                 resultado = resultado.Where(p => p.Name.Contains(filter));
             }
-
-            //var resultado = _cityService.FindPagingAsync(filter);
 
             var model = await PagingList.CreateAsync(resultado, 20, pageindex, sort, "Name");
             model.RouteValue = new RouteValueDictionary { { "filter", filter } };

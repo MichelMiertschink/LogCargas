@@ -47,24 +47,23 @@ namespace LogCargas.Services
                 .ToListAsync();
         }
 
-        // Filtro pela origem da viagem
-        public async Task<List<LoadScheduling>> FindByCityOriginAsync(City? cityOrigin)
+        // Filtro pela origem OU destino OU motorista
+        public async Task<IQueryable<LoadScheduling>> FindByOriginDestinyDriverAsync(string filter)
         {
             var result = from obj in _context.LoadScheduling select obj;
-            if (cityOrigin != null)
+            if (!string.IsNullOrEmpty(filter))
             {
-                result = result.Where(x => x.CityOrigin == cityOrigin);
+                result = result.Where(x => x.CityOrigin.Name.Contains(filter));
             }
 
-            return await result
+            return result.AsQueryable()
                 .Include(cityDestiny => cityDestiny.CityDestiny)
                 .Include(cityOrigin => cityOrigin.CityOrigin)
                 .Include(customerId => customerId.Customer)
-                .Include(driverId => driverId.Driver)
-                .ToListAsync();
+                .Include(driverId => driverId.Driver);
         }
 
-        // Ordenado pro data de descarregamento
+        // Ordenado por data de descarregamento
         public async Task<List<LoadScheduling>> FindAllOrderCustomerAsync()
         {
             return await _context.LoadScheduling

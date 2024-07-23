@@ -4,6 +4,8 @@ using LogCargas.Models;
 using LogCargas.Models.ViewModels;
 using LogCargas.Services;
 using System.Diagnostics;
+using Microsoft.EntityFrameworkCore;
+using ReflectionIT.Mvc.Paging;
 
 namespace LogCargas.Controllers
 {
@@ -27,7 +29,7 @@ namespace LogCargas.Controllers
             var list = await _loadSchedulingService.FindAllAsync();
             return View(list);
         }
-
+                
         // Lista pela data de inclusão
         public async Task<IActionResult> SimpleSearch(DateTime? minDate, DateTime? maxDate)
         {
@@ -44,13 +46,16 @@ namespace LogCargas.Controllers
             var result = await _loadSchedulingService.FindByIncludeDateAsync(minDate, maxDate);
             return View(result);
         }
-
-        //Busca por cidade de origem
-        public async Task<IActionResult> CityOriginSearch(City? cityOrigin)
+          
+        //GET to index -- Paging and filter -- Buscar cidade de origem
+        public async Task<IActionResult> CityOriginSearch(string filter, int pageindex = 1, string sort = "IncludeDate")
         {
+            var resultado = _loadSchedulingService.FindByOriginDestinyDriverAsync(filter);
+            
+            var model = await PagingList.CreateAsync(resultado.Result, 20, pageindex, sort, "IncludeDate");
+            model.RouteValue = new RouteValueDictionary { { "filter", filter } };
+            return View(model);
 
-            var result = await _loadSchedulingService.FindByCityOriginAsync(cityOrigin);
-            return View(result);
         }
 
         // GET: LoadScheduling/Create

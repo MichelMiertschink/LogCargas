@@ -11,12 +11,10 @@ namespace LogCargas.Controllers
 {
     public class CitiesController : Controller
     {
-        private readonly LogCargasContext _context;
         private readonly CityService _cityService;
         private readonly StateService _stateService;
-        public CitiesController(CityService cityService, StateService stateService, LogCargasContext context)
+        public CitiesController(CityService cityService, StateService stateService)
         {
-            _context = context;
             _cityService = cityService;
             _stateService = stateService;
         }
@@ -30,13 +28,9 @@ namespace LogCargas.Controllers
 
         public async Task<IActionResult> Index(string filter, int pageindex = 1, string sort = "Name")
         {
-            var resultado = _context.Cities.Include(obj => obj.State).AsNoTracking().AsQueryable();
-            if (!string.IsNullOrEmpty(filter))
-            {
-                resultado = resultado.Where(p => p.Name.Contains(filter));
-            }
+            var resultado = _cityService.FindPagingAsync(filter);
 
-            var model = await PagingList.CreateAsync(resultado, 20, pageindex, sort, "Name");
+            var model = await PagingList.CreateAsync(resultado.Result, 20, pageindex, sort, "Name");
             model.RouteValue = new RouteValueDictionary { { "filter", filter } };
             return View(model);
 

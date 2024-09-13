@@ -30,6 +30,7 @@ namespace LogCargas
             builder.Services.AddScoped<VehicleService>();
             builder.Services.AddScoped<DriverService>();
             builder.Services.AddScoped<LoadSchedulingService>();
+            builder.Services.AddScoped<RedeFrotaService>();
 
             // Seeding service
             var conectionString = builder.Configuration.GetConnectionString("AppDb");

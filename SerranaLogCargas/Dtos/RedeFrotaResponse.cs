@@ -1,11 +1,11 @@
 ﻿using Microsoft.Build.Framework.Profiler;
 using NuGet.Packaging.Signing;
+using System.Text.Json.Serialization;
 
 namespace LogCargas.Dtos
 {
     public class RedeFrotaResponse 
     {
-        //[Key]
         public int codigoTransacao { get; set; }
         public string OwnerId { get; set; }
         public Timestamp dataTransacao { get; set; }
@@ -24,7 +24,7 @@ namespace LogCargas.Dtos
         public string Requisicao { get; set; }
         public string Manifesto { get; set; }
 
-        //[JsonIgnore]
+        [JsonIgnore]
         public string Service { get; set; }
     }
 }

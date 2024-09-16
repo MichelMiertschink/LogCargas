@@ -7,6 +7,7 @@ using MySqlConnector;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using ReflectionIT.Mvc.Paging;
+using LogCargas.Mappings;
 
 namespace LogCargas
 {
@@ -31,6 +32,7 @@ namespace LogCargas
             builder.Services.AddScoped<DriverService>();
             builder.Services.AddScoped<LoadSchedulingService>();
             builder.Services.AddScoped<RedeFrotaService>();
+            builder.Services.AddAutoMapper(typeof(RedeFrotaMapping));
 
             // Seeding service
             var conectionString = builder.Configuration.GetConnectionString("AppDb");

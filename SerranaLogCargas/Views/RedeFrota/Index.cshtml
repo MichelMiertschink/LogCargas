@@ -1,0 +1,63 @@
+﻿@model IEnumerable<LogCargas.Models.RedeFrota>
+
+@{
+    ViewData["Title"] = "Rede Frota - Abastecimentos";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<p>
+    <a asp-action="" class="btn btn-primary">Buscar dados</a>
+    Informe o período de data no filtro
+</p>
+<nav class="navbar navbar-expand-sm bg-dark" data-bs-theme="dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Filtro</a>
+        <div class="collapse navbar-collapse" id="navbarColor01">
+            <form asp-action="BuscarRedeFrota">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <input type="date" class="form-control form-control-sm" name="minDate" value=@ViewData["minDate"] />
+                    </li>
+                    <li class="nav-item">
+                        <input type="date" class="form-control form-control-sm" name="maxDate" value=@ViewData["maxDate"] />
+                    </li>
+                    <li>
+                        <button class="btn btn-secondary btn-sm" type="submit">Filtrar</button>
+                    </li>
+                </ul>
+            </form>
+    </div>
+</nav>
+<table class="table table-dark table-striped table-hover">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.codigoTransacao)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CpfMmotorista)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.dataTransacao)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.codigoTransacao)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CpfMmotorista)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.dataTransacao)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

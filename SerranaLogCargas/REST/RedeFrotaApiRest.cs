@@ -1,39 +1,38 @@
-﻿using LogCargas.Dtos;
+﻿using System.Dynamic;
+using System.Text.Json;
+using LogCargas.Dtos;
+using LogCargas.Interfaces;
 using LogCargas.Models;
 using NuGet.Packaging.Signing;
-using System.Dynamic;
-using System.Text.Json;
+
 
 namespace LogCargas.REST
 {
-    public class RedeFrotaApiRest
+    public class RedeFrotaApiRest : IRedeFrotaApi
     {
-        public Task<ResponseGenerico<List<RedeFrota>>> BuscarTodos()
+        public async Task<ResponseGenerico<RedeFrota>> FindBetweenDate(string dateBetween)
         {
-            throw new NotImplementedException();
-        }
+            var request = new HttpRequestMessage(HttpMethod.Get, $"https://prd-redefrota-apim.azure-api.net/inteligencia/FormatoGestranTransacao?cliente=17595{dateBetween}");
 
-        public async Task<ResponseGenerico<List<RedeFrota>>> BuscarPorData(string dtInicioDtFim) 
-        {
-            var request = new HttpRequestMessage(HttpMethod.Get, $"https://prd-redefrota-apim.azure-api.net/inteligencia/FormatoGestranTransacao?cliente=17595{dtInicioDtFim}");
-
-            var response = new ResponseGenerico<List<RedeFrota>>();
+            var response = new ResponseGenerico<RedeFrota>();
             using (var client = new HttpClient())
             {
                 var responseRedeFrotaApiPrimeira = await client.SendAsync(request);
-                var ContentResp = await responseRedeFrotaApiPrimeira.Content.ReadAsStringAsync();
-                var ojbResponse = JsonSerializer.Deserialize<RedeFrota>(ContentResp);
+                var contentResp = await responseRedeFrotaApiPrimeira.Content.ReadAsStringAsync();
+                var ojbResponse = JsonSerializer.Deserialize<RedeFrota>(contentResp);
 
                 if (responseRedeFrotaApiPrimeira.IsSuccessStatusCode)
                 {
-                    response.StatusCode = responseRedeFrotaApiPrimeira.StatusCode;
+                    response.CodigoHttp = responseRedeFrotaApiPrimeira.StatusCode;
                     response.DadosRetorno = ojbResponse;
-                } else
+                }
+                else
                 {
-                    response.StatusCode = responseRedeFrotaApiPrimeira.StatusCode;
-                    response.DadosRetorno = JsonSerializer.Deserialize<ExpandoObject>(ContentResp);
+                    response.CodigoHttp = responseRedeFrotaApiPrimeira.StatusCode;
+                    response.ErroRetorno = JsonSerializer.Deserialize<ExpandoObject>(contentResp);
                 }
             }
+
             return response;
         }
     }

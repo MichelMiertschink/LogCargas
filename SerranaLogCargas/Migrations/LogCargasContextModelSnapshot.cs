@@ -25,15 +25,15 @@ namespace LogCargas.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    b.Property<string>("CodIbge")
+                        .HasColumnType("longtext");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<int>("StateId")
                         .HasColumnType("int");
-
-                    b.Property<string>("codIbge")
-                        .HasColumnType("longtext");
 
                     b.HasKey("Id");
 
@@ -77,9 +77,8 @@ namespace LogCargas.Migrations
                         .HasColumnType("varchar(11)");
 
                     b.Property<string>("CelPhone")
-                        .IsRequired()
-                        .HasMaxLength(11)
-                        .HasColumnType("varchar(11)");
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -164,6 +163,78 @@ namespace LogCargas.Migrations
                     b.HasIndex("DriverId");
 
                     b.ToTable("LoadScheduling");
+                });
+
+            modelBuilder.Entity("LogCargas.Models.RedeFrota", b =>
+                {
+                    b.Property<int>("codigoTransacao")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("CpfMmotorista")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("EstabelecimentoCNPJ")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime>("IncludeDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int>("Litros")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Manifesto")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("NomeCidade")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("NomeReduzido")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("NumeroCartao")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("OwnerId")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<bool>("Parcial")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("Placa")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Requisicao")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("TipoCombustivel")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime>("dataTransacao")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int>("odometro")
+                        .HasColumnType("int");
+
+                    b.Property<int>("quilometragem")
+                        .HasColumnType("int");
+
+                    b.Property<float>("valorTransacao")
+                        .HasColumnType("float");
+
+                    b.HasKey("codigoTransacao");
+
+                    b.ToTable("RedeFrota");
                 });
 
             modelBuilder.Entity("LogCargas.Models.State", b =>

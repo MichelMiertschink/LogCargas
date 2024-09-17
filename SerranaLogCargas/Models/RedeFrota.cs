@@ -6,13 +6,10 @@ namespace LogCargas.Models
 {
     public class RedeFrota
     {
-        // not Rede Frota
-        public DateTime IncludeDate { get; set; }
-
-        // Rede Frota
+        public DateTime includeDate {  get; set; }
         [Key]
         [JsonPropertyName("codigoTransacao")]
-        [Display(Name = "Cod.")]
+        [Display(Name = "Cod")]
         public int? codigoTransacao { get; set; }
 
         [JsonPropertyName("OwnerId")]

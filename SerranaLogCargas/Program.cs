@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using ReflectionIT.Mvc.Paging;
 using LogCargas.Mappings;
+using LogCargas.Interfaces;
+using LogCargas.REST;
 
 namespace LogCargas
 {
@@ -23,7 +25,7 @@ namespace LogCargas
             builder.Services.AddDbContextPool<LogCargasContext>(options =>
                 options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
-            // Registrando inje��o de dependencia para os servi�os
+            // Registrando injecao de dependencia para os servi�os
             builder.Services.AddScoped<SeedingService>();
             builder.Services.AddScoped<CityService>();
             builder.Services.AddScoped<StateService>();
@@ -32,7 +34,10 @@ namespace LogCargas
             builder.Services.AddScoped<DriverService>();
             builder.Services.AddScoped<LoadSchedulingService>();
             builder.Services.AddScoped<RedeFrotaService>();
+            builder.Services.AddScoped<IRedeFrotaService, RedeFrotaService>();
+            builder.Services.AddScoped<IRedeFrotaApi, RedeFrotaApiRest>();
             builder.Services.AddAutoMapper(typeof(RedeFrotaMapping));
+            //builder.Services.AddScoped<RedeFrotaService>();
 
             // Seeding service
             var conectionString = builder.Configuration.GetConnectionString("AppDb");

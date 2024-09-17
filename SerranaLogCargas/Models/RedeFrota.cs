@@ -12,54 +12,70 @@ namespace LogCargas.Models
         // Rede Frota
         [Key]
         [JsonPropertyName("codigoTransacao")]
-        public int codigoTransacao { get; set; }
+        [Display(Name = "Cod.")]
+        public int? codigoTransacao { get; set; }
 
         [JsonPropertyName("OwnerId")]
-        public string OwnerId { get; set; }
+        [Display(Name = "Proprietário")]
+        public string? OwnerId { get; set; }
         
         [JsonPropertyName("dataTransacao ")]
+        [Display(Name = "Dt Trans")]
         public DateTime dataTransacao { get; set; }
         
         [JsonPropertyName("NumeroCartao")]
+        [Display(Name = "Cartão")]
         public string NumeroCartao { get; set; }
         
         [JsonPropertyName("Placa")]
+        [Display(Name = "Placa")]
         public string Placa { get; set; }
        
         [JsonPropertyName("quilometragem")]
-		public int quilometragem { get; set; }
+        [Display(Name = "Km")]
+        public int quilometragem { get; set; }
        
         [JsonPropertyName("TipoCombustivel")]
-		public string TipoCombustivel { get; set; }
+        [Display(Name = "Tp Combust")]
+        public string TipoCombustivel { get; set; }
         
         [JsonPropertyName("Litros")]
-		public int Litros { get; set; }
+        [Display(Name = "Litros")]
+        public int Litros { get; set; }
        
         [JsonPropertyName("valorTransacao")]
-		public float valorTransacao { get; set; }
+        [Display(Name = "Valor Abast.")]
+        public float valorTransacao { get; set; }
       
         [JsonPropertyName("odometro")]
-		public int odometro { get; set; }
+        [Display(Name = "Odometro")]
+        public int odometro { get; set; }
        
         [JsonPropertyName("EstabelecimentoCNPJ")]
-		public string EstabelecimentoCNPJ { get; set; }
+        [Display(Name = "CNPJ Fornecedor")]
+        public string EstabelecimentoCNPJ { get; set; }
         
         [JsonPropertyName("NomeReduzido")]
-		public string NomeReduzido { get; set; }
+        [Display(Name = "Nome Posto")]
+        public string NomeReduzido { get; set; }
        
         [JsonPropertyName("NomeCidade")]
-		public string NomeCidade { get; set; }
+        [Display(Name = "Cidade Abast.")]
+        public string NomeCidade { get; set; }
         
         [JsonPropertyName("Parcial")]
 		public bool Parcial { get; set; }
         
         [JsonPropertyName("CpfMmotorista")]
-		public string CpfMmotorista { get; set; }
+        [Display(Name = "CPF Motorista")]
+        public string CpfMmotorista { get; set; }
         
         [JsonPropertyName("Requisicao")]
-		public string Requisicao { get; set; }
+        [Display(Name = "Requisição")]
+        public string Requisicao { get; set; }
         
         [JsonPropertyName("Manifesto")]
+        [Display(Name = "Manifesto")]
         public string Manifesto { get; set; }
     }
 }

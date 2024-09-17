@@ -25,20 +25,20 @@ namespace LogCargas.Services
             return _mapper.Map<ResponseGenerico<RedeFrotaResponse>>(redeFrota);
         }
 
-        public async Task<List<RedeFrota>> FindAllAsync()
+        public async Task<IQueryable<RedeFrota>> FindRedeFrotaBetweenDate(DateTime? minDate, DateTime? maxDate)
         {
-            return await _context.RedeFrota.ToListAsync();
-        }
-
-        public async Task<IQueryable<RedeFrota>> FindRedeFrotaBetweenDate(string filter)
-        {
-            var resultado = _context.RedeFrota.AsNoTracking().AsQueryable();
-            if (!string.IsNullOrEmpty(filter))
+            var result = from obj in _context.RedeFrota select obj;
+            if (minDate.HasValue)
             {
-                resultado = resultado.Where(r => r.Placa.Contains(filter) ||
-                                                 r.codigoTransacao.ToString().Contains(filter));
+                result = result.Where(x => x.dataTransacao.Date >= minDate.Value);
             }
-            return resultado.AsQueryable();
+
+            if (maxDate.HasValue)
+            {
+                result = result.Where(x => x.dataTransacao.Date <= maxDate.Value);
+            }
+
+            return result;
         }
 
         public async Task InsertAsync(RedeFrota redeFrota)

@@ -37,6 +37,7 @@ namespace LogCargas
             builder.Services.AddScoped<IRedeFrotaService, RedeFrotaService>();
             builder.Services.AddScoped<IRedeFrotaApi, RedeFrotaApiRest>();
             builder.Services.AddAutoMapper(typeof(RedeFrotaMapping));
+            //builder.Services.AddScoped<RedeFrotaService>();
 
             // Seeding service
             var conectionString = builder.Configuration.GetConnectionString("AppDb");

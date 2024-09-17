@@ -24,7 +24,5 @@ namespace LogCargas.Dtos
         public string Requisicao { get; set; }
         public string Manifesto { get; set; }
 
-        [JsonIgnore]
-        public string Service { get; set; }
     }
 }

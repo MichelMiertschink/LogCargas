@@ -1,22 +1,25 @@
 ﻿using AutoMapper;
 using LogCargas.Data;
 using LogCargas.Dtos;
+using LogCargas.Interfaces;
 using LogCargas.Models;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 
 namespace LogCargas.Services
 {
-    public class RedeFrotaService
+    public class RedeFrotaService : IRedeFrotaService
     {
 
         private readonly LogCargasContext _context;
         private readonly IMapper _mapper;
+        private readonly IRedeFrotaApi _redeFrotaApi;
 
-        public RedeFrotaService(LogCargasContext context , IMapper mapper )
+        public RedeFrotaService(LogCargasContext context , IMapper mapper, IRedeFrotaApi redeFrotaApi )
         {
             _context = context;
             _mapper = mapper;
+            _redeFrotaApi = redeFrotaApi;
         }
 
         public async Task<ResponseGenerico<RedeFrotaResponse>> FindRedeFrota(string filter)
@@ -43,9 +46,15 @@ namespace LogCargas.Services
 
         public async Task InsertAsync(RedeFrota redeFrota)
         {
-            redeFrota.IncludeDate = DateTime.Now;
+            //redeFrota.IncludeDate = DateTime.Now;
             _context.Add(redeFrota);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<ResponseGenerico<RedeFrotaResponse>> BuscarRedefrota(string cliente, string dta_inicio, string dta_final)
+        {
+            var redeFrota = await _redeFrotaApi.BuscarPorData(cliente, dta_inicio, dta_final);
+            return _mapper.Map<ResponseGenerico<RedeFrotaResponse>>(redeFrota);
         }
     }
 }

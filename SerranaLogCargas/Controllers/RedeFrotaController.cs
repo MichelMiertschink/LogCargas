@@ -30,7 +30,24 @@ namespace LogCargas.Controllers
             return View(result);
         }
 
-        [HttpPost("&cliente={cliente}&{dta_inicio}&{dta_final}")]
+        public async Task<IActionResult> BuscarRedeFrota(DateTime? minDate, DateTime? maxDate)
+        {
+            if (!minDate.HasValue)
+            {
+                minDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+            }
+            if (!maxDate.HasValue)
+            {
+                maxDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month));
+            }
+            string iniDate = minDate.Value.Date.ToString("yyyy-MM-ddT00:00:00.000Z");
+            string fimDate = maxDate.Value.Date.ToString("yyyy-MM-ddT23:59:59.999Z");
+            var result = await _redeFrotaService.BuscarRedeFrota(iniDate, fimDate);
+            return View(result);
+        }
+
+
+        [HttpPost("&{dta_inicio}&{dta_final}")]
         [ValidateAntiForgeryToken]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

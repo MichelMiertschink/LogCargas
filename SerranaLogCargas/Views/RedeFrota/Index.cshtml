@@ -5,21 +5,6 @@
 }
 
 <h1>@ViewData["Title"]</h1>
-
-<div class="d-flex">
-    <form method="post" asp-action="BuscarRedeFrota" enctype="multipart/form-data">
-        <ul class="navbar-nav me-auto">
-            <li class="nav-item">
-                <input type="date" class="form-control form-control-sm" name="minDate" value=@ViewData["minDate"] />
-            </li>
-            <li class="nav-item">
-                <input type="date" class="form-control form-control-sm" name="maxDate" value=@ViewData["maxDate"] />
-            </li>
-            <li>
-                <button class="btn btn-secondary btn-sm" type="submit">Buscar</button>
-            </li>
-    </form>
-</div>
 <nav class="navbar navbar-expand-sm bg-dark" data-bs-theme="dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="#">Filtro</a>
@@ -34,6 +19,7 @@
                     </li>
                     <li>
                         <button class="btn btn-secondary btn-sm" type="submit">Filtrar</button>
+                        <button class="btn btn-outline-primary btn-sm" type="submit" asp-action="BuscarRedeFrota">Consultar Rede Frota</button>
                     </li>
                 </ul>
             </form>

@@ -5,6 +5,6 @@ namespace LogCargas.Interfaces
 {
     public interface IRedeFrotaApi
     {
-        Task<ResponseGenerico<RedeFrotaResponse>> BuscarPorData(string cliente, string dta_inicio, string dta_final);
+        Task<ResponseGenerico<RedeFrotaResponse>> BuscarPorData(string dta_inicio, string dta_final);
     }
 }

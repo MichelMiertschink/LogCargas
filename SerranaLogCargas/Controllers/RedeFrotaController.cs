@@ -31,13 +31,14 @@ namespace LogCargas.Controllers
         }
 
         [HttpPost("&cliente={cliente}&{dta_inicio}&{dta_final}")]
+        [ValidateAntiForgeryToken]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> BuscarRedefrota([FromRoute] string cliente, string dta_inicio, string dta_final)
+        public async Task<IActionResult> BuscarRedeFrota([FromRoute] string dta_inicio, string dta_final)
         {
-            var response = await _redeFrotaService.BuscarRedefrota(cliente, dta_inicio, dta_final);
+            var response = await _redeFrotaService.BuscarRedeFrota(dta_inicio, dta_final);
 
             if (response.CodigoHttp == System.Net.HttpStatusCode.OK)
             {
@@ -47,7 +48,6 @@ namespace LogCargas.Controllers
             {
                 return StatusCode((int)response.CodigoHttp, response.ErroRetorno);
             }
-        }
-
+        }      
     }
 }

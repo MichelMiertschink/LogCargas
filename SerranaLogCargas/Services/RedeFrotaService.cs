@@ -4,6 +4,7 @@ using LogCargas.Dtos;
 using LogCargas.Interfaces;
 using LogCargas.Models;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Packaging.Signing;
 using System.ComponentModel.DataAnnotations;
 
 namespace LogCargas.Services
@@ -51,9 +52,9 @@ namespace LogCargas.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task<ResponseGenerico<RedeFrotaResponse>> BuscarRedefrota(string cliente, string dta_inicio, string dta_final)
+        public async Task<ResponseGenerico<RedeFrotaResponse>> BuscarRedeFrota(string dta_inicio, string dta_final)
         {
-            var redeFrota = await _redeFrotaApi.BuscarPorData(cliente, dta_inicio, dta_final);
+            var redeFrota = await _redeFrotaApi.BuscarPorData(dta_inicio, dta_final);
             return _mapper.Map<ResponseGenerico<RedeFrotaResponse>>(redeFrota);
         }
     }

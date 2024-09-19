@@ -8,7 +8,7 @@ namespace LogCargas.Dtos
     {
         public int codigoTransacao { get; set; }
         public string OwnerId { get; set; }
-        public Timestamp dataTransacao { get; set; }
+        public DateTime dataTransacao { get; set; }
         public string NumeroCartao { get; set; }
         public string Placa { get; set; }
         public int quilometragem { get; set; }

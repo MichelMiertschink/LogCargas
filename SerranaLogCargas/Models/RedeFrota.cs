@@ -6,7 +6,7 @@ namespace LogCargas.Models
 {
     public class RedeFrota
     {
-        public DateTime includeDate {  get; set; }
+        //public DateTime includeDate {  get; set; }
         [Key]
         [JsonPropertyName("codigoTransacao")]
         [Display(Name = "Cod")]

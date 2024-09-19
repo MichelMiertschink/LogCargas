@@ -5,9 +5,9 @@
 }
 
 <h1>@ViewData["Title"]</h1>
-
+*$#*%$@*@%*******$*@*@@
 <div class="d-flex">
-    <form method="post" asp-action="BuscarRedeFrota" enctype="multipart/form-data">
+    <form method="post" asp-action="BuscarRedefrota" enctype="multipart/form-data">
         <ul class="navbar-nav me-auto">
             <li class="nav-item">
                 <input type="date" class="form-control form-control-sm" name="minDate" value=@ViewData["minDate"] />
@@ -20,25 +20,6 @@
             </li>
     </form>
 </div>
-<nav class="navbar navbar-expand-sm bg-dark" data-bs-theme="dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">Filtro</a>
-        <div class="collapse navbar-collapse" id="navbarColor01">
-            <form asp-action="Index">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <input type="date" class="form-control form-control-sm" name="minDate" value=@ViewData["minDate"] />
-                    </li>
-                    <li class="nav-item">
-                        <input type="date" class="form-control form-control-sm" name="maxDate" value=@ViewData["maxDate"] />
-                    </li>
-                    <li>
-                        <button class="btn btn-secondary btn-sm" type="submit">Filtrar</button>
-                    </li>
-                </ul>
-            </form>
-    </div>
-</nav>
 <table class="table table-dark table-striped table-hover">
     <thead>
         <tr>

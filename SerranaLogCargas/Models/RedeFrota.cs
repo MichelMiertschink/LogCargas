@@ -1,5 +1,6 @@
 ﻿using NuGet.Packaging.Signing;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
 namespace LogCargas.Models
@@ -7,14 +8,14 @@ namespace LogCargas.Models
     public class RedeFrota
     {
         //public DateTime includeDate {  get; set; }
+        [JsonPropertyName("OwnerId")]
+        [Display(Name = "Proprietário")]
+        public string? OwnerId { get; set; }
+
         [Key]
         [JsonPropertyName("codigoTransacao")]
         [Display(Name = "Cod")]
         public int? codigoTransacao { get; set; }
-
-        [JsonPropertyName("OwnerId")]
-        [Display(Name = "Proprietário")]
-        public string? OwnerId { get; set; }
         
         [JsonPropertyName("dataTransacao ")]
         [Display(Name = "Dt Trans")]
@@ -38,11 +39,11 @@ namespace LogCargas.Models
         
         [JsonPropertyName("Litros")]
         [Display(Name = "Litros")]
-        public int Litros { get; set; }
+        public double Litros { get; set; }
        
         [JsonPropertyName("valorTransacao")]
         [Display(Name = "Valor Abast.")]
-        public float valorTransacao { get; set; }
+        public double valorTransacao { get; set; }
       
         [JsonPropertyName("odometro")]
         [Display(Name = "Odometro")]
@@ -72,6 +73,7 @@ namespace LogCargas.Models
         public string Requisicao { get; set; }
         
         [JsonPropertyName("Manifesto")]
+        [NotMapped]
         [Display(Name = "Manifesto")]
         public string Manifesto { get; set; }
     }

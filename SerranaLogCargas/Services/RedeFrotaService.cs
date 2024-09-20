@@ -55,8 +55,7 @@ namespace LogCargas.Services
         public async Task<ResponseGenerico<RedeFrotaResponse>> BuscarRedeFrota(string dta_inicio, string dta_final)
         {
             var redeFrota = await _redeFrotaApi.BuscarPorData(dta_inicio, dta_final);
-            // erro no retorno para a tela.
-            // Gravar no 
+
             return _mapper.Map<ResponseGenerico<RedeFrotaResponse>>(redeFrota);
         }
 

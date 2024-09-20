@@ -43,7 +43,10 @@ namespace LogCargas.Controllers
             string iniDate = minDate.Value.Date.ToString("yyyy-MM-ddT00:00:00.000Z");
             string fimDate = maxDate.Value.Date.ToString("yyyy-MM-ddT23:59:59.999Z");
             var result = await _redeFrotaService.BuscarRedeFrota(iniDate, fimDate);
-            // Cadastras os itens na tabela com o Insert
+            // Cadastrar os itens na tabela
+           // foreach (var item in result) {
+
+
             return View(result);
         }
 

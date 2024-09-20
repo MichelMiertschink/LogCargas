@@ -21,8 +21,8 @@ namespace LogCargas.Dtos
         public string NomeCidade { get; set; }
         public bool Parcial { get; set; }
         public string CpfMmotorista { get; set; }
-        public object Requisicao { get; set; }
-        public object Manifesto { get; set; }
+        public string Requisicao { get; set; }
+        public string Manifesto { get; set; }
 
     }
 }

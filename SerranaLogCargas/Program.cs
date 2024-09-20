@@ -10,6 +10,7 @@ using ReflectionIT.Mvc.Paging;
 using LogCargas.Mappings;
 using LogCargas.Interfaces;
 using LogCargas.REST;
+using System.Text.Json.Serialization;
 
 namespace LogCargas
 {
@@ -37,7 +38,9 @@ namespace LogCargas
             builder.Services.AddScoped<IRedeFrotaService, RedeFrotaService>();
             builder.Services.AddScoped<IRedeFrotaApi, RedeFrotaApiRest>();
             builder.Services.AddAutoMapper(typeof(RedeFrotaMapping));
-            //builder.Services.AddScoped<RedeFrotaService>();
+           // builder.Services.AddScoped<RedeFrotaService>();
+
+           // builder.Services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
             // Seeding service
             var conectionString = builder.Configuration.GetConnectionString("AppDb");

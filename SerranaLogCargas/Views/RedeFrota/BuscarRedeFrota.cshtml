@@ -1,11 +1,10 @@
-﻿@model IEnumerable<LogCargas.Models.RedeFrota>
+﻿@model LogCargas.Dtos.ResponseGenerico<LogCargas.Dtos.RedeFrotaResponse>
 
 @{
     ViewData["Title"] = "Rede Frota - Abastecimentos";
 }
 
 <h1>@ViewData["Title"]</h1>
-*$#*%$@*@%*******$*@*@@
 <div class="d-flex">
     <form method="post" asp-action="BuscarRedefrota" enctype="multipart/form-data">
         <ul class="navbar-nav me-auto">
@@ -20,35 +19,8 @@
             </li>
     </form>
 </div>
-<table class="table table-dark table-striped table-hover">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.codigoTransacao)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CpfMmotorista)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.dataTransacao)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.codigoTransacao)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CpfMmotorista)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.dataTransacao)
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<div class="container">
+    <p> Importação finalizada com sucesso </p>
+</div>
+
+

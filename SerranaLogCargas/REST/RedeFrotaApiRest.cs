@@ -33,12 +33,13 @@ namespace LogCargas.REST
             {
                 var ResponseApiRedefrota = await client.SendAsync(request);
                 var contentResp = await ResponseApiRedefrota.Content.ReadAsStringAsync();
+                contentResp = contentResp.Trim('\'').Replace("\\", "");
                 var objResponse = JsonSerializer.Deserialize<List<RedeFrotaResponse>>(contentResp);
 
                 if (ResponseApiRedefrota.IsSuccessStatusCode)
                 {
                     response.CodigoHttp = ResponseApiRedefrota.StatusCode;
-                    //response.DadosRetorno = objResponse.ToList();
+                    response.DadosRetorno = objResponse;
                 }
                 else
                 {

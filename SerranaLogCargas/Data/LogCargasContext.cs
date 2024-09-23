@@ -19,6 +19,7 @@ namespace LogCargas.Data
         public DbSet<Driver> Driver { get; set; } = default!;
         public DbSet<Vehicle> Vehicles { get; set; } = default!;
         public DbSet<LoadScheduling> LoadScheduling { get; set; } = default!;
+        public DbSet<RedeFrota> RedeFrota { get; set; } = default!;
         /*public DbSet<IdentityUser> IdentityUser { get; set; } = default!;
 
         protected override void OnModelCreating(ModelBuilder builder)

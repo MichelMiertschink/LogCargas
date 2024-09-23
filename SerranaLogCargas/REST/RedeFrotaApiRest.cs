@@ -1,13 +1,9 @@
-﻿using System.Configuration;
-using System.Dynamic;
-using System.Text.Json;
+﻿using System.Dynamic;
 using LogCargas.Dtos;
 using LogCargas.Interfaces;
 using LogCargas.Models;
-using Microsoft.AspNetCore.Server.HttpSys;
-using Newtonsoft.Json;
-using NuGet.Packaging.Signing;
 using JsonSerializer = System.Text.Json.JsonSerializer;
+
 
 
 namespace LogCargas.REST
@@ -34,7 +30,6 @@ namespace LogCargas.REST
             {
                 var ResponseApiRedefrota = await client.SendAsync(request);
                 var contentResp = await ResponseApiRedefrota.Content.ReadAsStringAsync();
-                contentResp = contentResp.Trim('\'').Replace("\\", "");
                 var objResponse = JsonSerializer.Deserialize<List<RedeFrota>>(contentResp);
 
                 if (ResponseApiRedefrota.IsSuccessStatusCode)

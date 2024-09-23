@@ -65,6 +65,22 @@ namespace LogCargas.Controllers
             {
                 return StatusCode((int)response.CodigoHttp, response.ErroRetorno);
             }
-        }      
+        }
+        public async Task<IActionResult> ExportaBsoft(DateTime? minDate, DateTime? maxDate)
+        {
+
+            if (!minDate.HasValue)
+            {
+                minDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+            }
+            if (!maxDate.HasValue)
+            {
+                maxDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month));
+            }
+            ViewData["minDate"] = minDate.Value.Date.ToString("yyyy-MM-dd");
+            ViewData["maxDate"] = maxDate.Value.Date.ToString("yyyy-MM-dd");
+            var result = await _redeFrotaService.FindRedeFrotaBetweenDate(minDate, maxDate);
+            return View(result);
+        }
     }
 }

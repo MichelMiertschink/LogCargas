@@ -8,7 +8,7 @@ namespace LogCargas.Models
     public class RedeFrota
     {
         //public DateTime includeDate {  get; set; }
-        [JsonPropertyName("OwnerId")]
+        [JsonPropertyName("ownerId")]
         [Display(Name = "Proprietário")]
         public string? OwnerId { get; set; }
 
@@ -17,15 +17,15 @@ namespace LogCargas.Models
         [Display(Name = "Cod")]
         public int? codigoTransacao { get; set; }
         
-        [JsonPropertyName("dataTransacao ")]
+        [JsonPropertyName("dataTransacao")]
         [Display(Name = "Dt Trans")]
         public DateTime dataTransacao { get; set; }
         
-        [JsonPropertyName("NumeroCartao")]
+        [JsonPropertyName("numeroCartao")]
         [Display(Name = "Cartão")]
         public string? NumeroCartao { get; set; }
         
-        [JsonPropertyName("Placa")]
+        [JsonPropertyName("placa")]
         [Display(Name = "Placa")]
         public string? Placa { get; set; }
        
@@ -33,11 +33,11 @@ namespace LogCargas.Models
         [Display(Name = "Km")]
         public int? quilometragem { get; set; }
        
-        [JsonPropertyName("TipoCombustivel")]
+        [JsonPropertyName("tipoCombustivel")]
         [Display(Name = "Tp Combust")]
         public string? TipoCombustivel { get; set; }
         
-        [JsonPropertyName("Litros")]
+        [JsonPropertyName("litros")]
         [Display(Name = "Litros")]
         public double? Litros { get; set; }
        
@@ -49,30 +49,30 @@ namespace LogCargas.Models
         [Display(Name = "Odometro")]
         public int? odometro { get; set; }
        
-        [JsonPropertyName("EstabelecimentoCNPJ")]
+        [JsonPropertyName("estabelecimentoCNPJ")]
         [Display(Name = "CNPJ Fornecedor")]
         public string? EstabelecimentoCNPJ { get; set; }
         
-        [JsonPropertyName("NomeReduzido")]
+        [JsonPropertyName("nomeReduzido")]
         [Display(Name = "Nome Posto")]
         public string? NomeReduzido { get; set; }
        
-        [JsonPropertyName("NomeCidade")]
+        [JsonPropertyName("nomeCidade")]
         [Display(Name = "Cidade Abast.")]
         public string? NomeCidade { get; set; }
         
-        [JsonPropertyName("Parcial")]
+        [JsonPropertyName("parcial")]
 		public bool? Parcial { get; set; }
         
-        [JsonPropertyName("CpfMmotorista")]
+        [JsonPropertyName("cpfMotorista")]
         [Display(Name = "CPF Motorista")]
         public string? CpfMmotorista { get; set; }
         
-        [JsonPropertyName("Requisicao")]
+        [JsonPropertyName("requisicao")]
         [Display(Name = "Requisição")]
         public string? Requisicao { get; set; }
         
-        [JsonPropertyName("Manifesto")]
+        [JsonPropertyName("manifesto")]
         [NotMapped]
         [Display(Name = "Manifesto")]
         public string? Manifesto { get; set; }

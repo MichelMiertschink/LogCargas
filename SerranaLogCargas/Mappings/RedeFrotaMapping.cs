@@ -8,7 +8,7 @@ namespace LogCargas.Mappings
     {
         public RedeFrotaMapping() 
         {
-           // CreateMap(typeof(ResponseGenerico<>), typeof(ResponseGenerico<>));
+           CreateMap(typeof(ResponseGenerico<>), typeof(ResponseGenerico<>));
            // CreateMap<RedeFrota, RedeFrota>();
         }
     }

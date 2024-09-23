@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LogCargas.Migrations
 {
     [DbContext(typeof(LogCargasContext))]
-    [Migration("20240923140325_Initial")]
-    partial class Initial
+    [Migration("20240923174758_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

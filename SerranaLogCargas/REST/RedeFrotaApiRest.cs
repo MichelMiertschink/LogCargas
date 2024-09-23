@@ -3,6 +3,7 @@ using System.Dynamic;
 using System.Text.Json;
 using LogCargas.Dtos;
 using LogCargas.Interfaces;
+using LogCargas.Models;
 using Microsoft.AspNetCore.Server.HttpSys;
 using Newtonsoft.Json;
 using NuGet.Packaging.Signing;
@@ -13,7 +14,7 @@ namespace LogCargas.REST
 {
     public class RedeFrotaApiRest : IRedeFrotaApi
     {
-        public async Task<ResponseGenerico<RedeFrotaResponse>> BuscarPorData(string dta_inicio, string dta_final)
+        public async Task<ResponseGenerico<RedeFrota>> BuscarPorData(string dta_inicio, string dta_final)
         {
             var request = new HttpRequestMessage(HttpMethod.Post, $"https://prd-redefrota-apim.azure-api.net/inteligencia/FormatoGestranTransacao?" +
                 $"cliente=17595" +
@@ -28,18 +29,19 @@ namespace LogCargas.REST
 
             request.Content = content;
 
-            var response = new ResponseGenerico<RedeFrotaResponse>();
+            var response = new ResponseGenerico<RedeFrota>();
             using (var client = new HttpClient())
             {
                 var ResponseApiRedefrota = await client.SendAsync(request);
                 var contentResp = await ResponseApiRedefrota.Content.ReadAsStringAsync();
                 contentResp = contentResp.Trim('\'').Replace("\\", "");
-                var objResponse = JsonSerializer.Deserialize<List<RedeFrotaResponse>>(contentResp);
+                var objResponse = JsonSerializer.Deserialize<List<RedeFrota>>(contentResp);
 
                 if (ResponseApiRedefrota.IsSuccessStatusCode)
                 {
                     response.CodigoHttp = ResponseApiRedefrota.StatusCode;
                     response.DadosRetorno = objResponse;
+                    
                 }
                 else
                 {

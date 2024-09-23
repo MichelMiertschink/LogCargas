@@ -3,7 +3,9 @@ using LogCargas.Data;
 using LogCargas.Dtos;
 using LogCargas.Interfaces;
 using LogCargas.Models;
+using MessagePack.Formatters;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using NuGet.Packaging.Signing;
 using System.ComponentModel.DataAnnotations;
 
@@ -22,13 +24,6 @@ namespace LogCargas.Services
             _mapper = mapper;
             _redeFrotaApi = redeFrotaApi;
         }
-
-        public async Task<ResponseGenerico<RedeFrotaResponse>> FindRedeFrota(string filter)
-        {
-            var redeFrota = await _context.RedeFrota.FindAsync();
-            return _mapper.Map<ResponseGenerico<RedeFrotaResponse>>(redeFrota);
-        }
-
         public async Task<IQueryable<RedeFrota>> FindRedeFrotaBetweenDate(DateTime? minDate, DateTime? maxDate)
         {
             var result = from obj in _context.RedeFrota select obj;
@@ -47,17 +42,25 @@ namespace LogCargas.Services
 
         public async Task InsertAsync(RedeFrota redeFrota)
         {
-            //redeFrota.IncludeDate = DateTime.Now;
+            // redeFrota.IncludeDate = DateTime.Now;
             _context.Add(redeFrota);
             await _context.SaveChangesAsync();
         }
 
-        public async Task<ResponseGenerico<RedeFrotaResponse>> BuscarRedeFrota(string dta_inicio, string dta_final)
+        public async Task<RedeFrota> FindByIdAsync(int codTtransacao)
         {
-            var redeFrota = await _redeFrotaApi.BuscarPorData(dta_inicio, dta_final);
-
-            return _mapper.Map<ResponseGenerico<RedeFrotaResponse>>(redeFrota);
+            return await _context.RedeFrota.FirstOrDefaultAsync(obj => obj.codigoTransacao == codTtransacao);
         }
 
+        public async Task<ResponseGenerico<RedeFrota>> BuscarRedeFrota(string dta_inicio, string dta_final)
+        {
+            var redeFrota = await _redeFrotaApi.BuscarPorData(dta_inicio, dta_final);
+            var abastecimentos = redeFrota.DadosRetorno;
+            foreach (var item in abastecimentos)
+            {
+                InsertAsync(item);
+            }
+            return redeFrota;
+        }
     }
 }

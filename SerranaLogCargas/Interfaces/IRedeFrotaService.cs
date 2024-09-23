@@ -1,4 +1,5 @@
 ﻿using LogCargas.Dtos;
+using LogCargas.Models;
 
 namespace LogCargas.Interfaces
 {
@@ -6,7 +7,7 @@ namespace LogCargas.Interfaces
     {
         public interface IRedeFrotaService
         {
-            Task<ResponseGenerico<RedeFrotaResponse>> BuscarRedefrota(string cliente, string dta_inicio, string dta_final);
+            Task<ResponseGenerico<RedeFrota>> BuscarRedefrota(string cliente, string dta_inicio, string dta_final);
         }
     }
 }

@@ -1,26 +1,12 @@
-﻿@model LogCargas.Dtos.ResponseGenerico<LogCargas.Dtos.RedeFrotaResponse>
+﻿@* @model <LogCargas.Models.RedeFrota> *@
 
 @{
     ViewData["Title"] = "Rede Frota - Abastecimentos";
 }
 
 <h1>@ViewData["Title"]</h1>
-<div class="d-flex">
-    <form method="post" asp-action="BuscarRedefrota" enctype="multipart/form-data">
-        <ul class="navbar-nav me-auto">
-            <li class="nav-item">
-                <input type="date" class="form-control form-control-sm" name="minDate" value=@ViewData["minDate"] />
-            </li>
-            <li class="nav-item">
-                <input type="date" class="form-control form-control-sm" name="maxDate" value=@ViewData["maxDate"] />
-            </li>
-            <li>
-                <button class="btn btn-secondary btn-sm" type="submit">Buscar</button>
-            </li>
-    </form>
-</div>
 <div class="container">
-    <p> Importação finalizada com sucesso </p>
+    <h1 class="text-bg-info text-center"> Importação finalizada com sucesso </h1>
 </div>
 
 

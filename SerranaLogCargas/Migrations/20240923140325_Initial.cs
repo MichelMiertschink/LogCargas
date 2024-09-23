@@ -111,32 +111,29 @@ namespace LogCargas.Migrations
                 {
                     codigoTransacao = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    IncludeDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    OwnerId = table.Column<string>(type: "longtext", nullable: false)
+                    OwnerId = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     dataTransacao = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    NumeroCartao = table.Column<string>(type: "longtext", nullable: false)
+                    NumeroCartao = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Placa = table.Column<string>(type: "longtext", nullable: false)
+                    Placa = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    quilometragem = table.Column<int>(type: "int", nullable: false),
-                    TipoCombustivel = table.Column<string>(type: "longtext", nullable: false)
+                    quilometragem = table.Column<int>(type: "int", nullable: true),
+                    TipoCombustivel = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Litros = table.Column<int>(type: "int", nullable: false),
-                    valorTransacao = table.Column<float>(type: "float", nullable: false),
-                    odometro = table.Column<int>(type: "int", nullable: false),
-                    EstabelecimentoCNPJ = table.Column<string>(type: "longtext", nullable: false)
+                    Litros = table.Column<double>(type: "double", nullable: true),
+                    valorTransacao = table.Column<double>(type: "double", nullable: true),
+                    odometro = table.Column<int>(type: "int", nullable: true),
+                    EstabelecimentoCNPJ = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    NomeReduzido = table.Column<string>(type: "longtext", nullable: false)
+                    NomeReduzido = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    NomeCidade = table.Column<string>(type: "longtext", nullable: false)
+                    NomeCidade = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Parcial = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    CpfMmotorista = table.Column<string>(type: "longtext", nullable: false)
+                    Parcial = table.Column<bool>(type: "tinyint(1)", nullable: true),
+                    CpfMmotorista = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Requisicao = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Manifesto = table.Column<string>(type: "longtext", nullable: false)
+                    Requisicao = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>

@@ -1,7 +1,12 @@
-﻿using LogCargas.Models;
+﻿using ClosedXML.Excel;
+using LogCargas.Models;
 using LogCargas.Services;
 using Microsoft.AspNetCore.Mvc;
+using ClosedXML.Excel;
 using ReflectionIT.Mvc.Paging;
+using System.Data;
+using DocumentFormat.OpenXml.Spreadsheet;
+using System.Diagnostics.Metrics;
 
 namespace LogCargas.Controllers
 {
@@ -67,8 +72,8 @@ namespace LogCargas.Controllers
             }
         }
         public async Task<IActionResult> ExportaBsoft(DateTime? minDate, DateTime? maxDate)
+            
         {
-
             if (!minDate.HasValue)
             {
                 minDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
@@ -79,8 +84,70 @@ namespace LogCargas.Controllers
             }
             ViewData["minDate"] = minDate.Value.Date.ToString("yyyy-MM-dd");
             ViewData["maxDate"] = maxDate.Value.Date.ToString("yyyy-MM-dd");
-            var result = await _redeFrotaService.FindRedeFrotaBetweenDate(minDate, maxDate);
-            return View(result);
+
+            // Faz a busca no banco de dados
+            var result = _redeFrotaService.FindRedeFrotaBetweenDate(minDate, maxDate);
+
+            // Monta o DataTable para exportação
+            DataTable dataTable = new DataTable();
+            dataTable.TableName = "Exporta RedeFrota"
+                + minDate
+                + "_"
+                + maxDate;
+
+            dataTable.Columns.Add("DOCUMENTO", typeof(string));
+            dataTable.Columns.Add("DATA", typeof(string));
+            dataTable.Columns.Add("PLACA_VEICULO", typeof(string));
+            dataTable.Columns.Add("CODIGO_DESPESA", typeof(string));
+            dataTable.Columns.Add("DESCRICAO_DESPESA", typeof(string));
+            dataTable.Columns.Add("CNPJ_FORNECEDOR", typeof(string));
+            dataTable.Columns.Add("QUANTIDADE", typeof(string));
+            dataTable.Columns.Add("VALOR_UNITARIO", typeof(string));
+            dataTable.Columns.Add("VALOR_TOTAL", typeof(string));
+            dataTable.Columns.Add("TIPO_PAGAMENTO", typeof(string));
+            dataTable.Columns.Add("PREVISAO_PAGAMENTO", typeof(string));
+            dataTable.Columns.Add("HODOMETRO", typeof(string));
+            dataTable.Columns.Add("HORIMETRO", typeof(string));
+            dataTable.Columns.Add("DESCONTAR_COMISSAO", typeof(string));
+            dataTable.Columns.Add("ABASTECIMENTO_COMPLETO", typeof(string));
+            dataTable.Columns.Add("OBSERVACAO", typeof(string));
+            dataTable.Columns.Add("CPF_MOTORISTA", typeof(string));
+
+
+            string vazio = "";
+            string codDespesaDiesel = "173";
+            string codDespesaArla = "10";
+
+            if (result.Count() > 0)
+            {
+                foreach (var abastecimentos in result)
+                {
+                    dataTable.Rows.Add(abastecimentos.codigoTransacao,
+                                       abastecimentos.dataTransacao,
+                                       abastecimentos.Placa,
+                                       abastecimentos.TipoCombustivel.Equals("DIESEL S-10") ? codDespesaDiesel : codDespesaArla,
+                                       vazio,
+                                       abastecimentos.EstabelecimentoCNPJ,
+                                       abastecimentos.Litros,
+                                       vazio,
+                                       abastecimentos.valorTransacao,
+                                       vazio,
+                                       vazio,
+                                       abastecimentos.odometro,
+                                       vazio,
+                                       vazio,
+                                       abastecimentos.Parcial,
+                                       "Cartão: " + abastecimentos.NumeroCartao +
+                                       "Cidade" + abastecimentos.NomeCidade +
+                                       "Reduzido" + abastecimentos.NomeReduzido
+                                       );
+                }
+            }
+            using (XLWorkbook teste = new XLWorkbook())
+            {
+                teste.AddWorksheet(result, "Importe")
+            }
+            return ;
         }
     }
 }

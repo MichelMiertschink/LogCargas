@@ -7,7 +7,9 @@ namespace LogCargas.Models
 {
     public class RedeFrota
     {
+        [Display(Name = "Dt. Inclusão")]
         public DateTime includeDate {  get; set; }
+
         [JsonPropertyName("ownerId")]
         [Display(Name = "Proprietário")]
         public string? OwnerId { get; set; }

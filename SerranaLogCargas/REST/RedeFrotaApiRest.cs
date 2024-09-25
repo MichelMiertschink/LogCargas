@@ -17,7 +17,8 @@ namespace LogCargas.REST
                 $"&dta_inicio={dta_inicio}" +
                 $"&dta_final{dta_final}");
 
-            request.Headers.Add("Ocp-Apim-Subscription-Key", "1f568d7faeec4d069b7f74343ecfdc5c");
+            request.Headers.Add("Ocp-Apim-Subscription-Key", "7bb40cd8894b4f0a840726dba63cb543");
+            request.Headers.Add("Ocp-Apim-Subscription-Key", "6d579d3d0f5947a1a1bc409d1302b8dd");
             request.Headers.Add("Ocp-Apim-Trace", "true");
 
             var content = new StringContent("{\r\n    \"cliente\":17595,\r\n    \"dta_inicio\":\"" + $"{dta_inicio}" + "\",\r\n    \"dta_fim\":\"" +

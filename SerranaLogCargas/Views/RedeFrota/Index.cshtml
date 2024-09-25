@@ -20,7 +20,7 @@
                     <li>
                         <button class="btn btn-secondary btn-sm" type="submit">Filtrar</button>
                         <button class="btn btn-outline-primary btn-sm" type="submit" asp-action="BuscarRedeFrota">Consultar Rede Frota</button>
-                        <button class="btn btn-outline-info btn-sm" type="submit" asp-action="ExportaBoft">Exportar para Bsoft</button>
+                        <button class="btn btn-outline-info btn-sm" type="submit" asp-action="ExportaBsoft">Exportar para Bsoft</button>
                     </li>
                 </ul>
             </form>
@@ -56,6 +56,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.NomeCidade)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Parcial)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -89,6 +92,9 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.NomeCidade)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Parcial)
                 </td>
             </tr>
         }

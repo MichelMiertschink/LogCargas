@@ -86,7 +86,7 @@ namespace LogCargas.Controllers
             ViewData["maxDate"] = maxDate.Value.Date.ToString("yyyy-MM-dd");
 
             // Faz a busca no banco de dados
-            var result = _redeFrotaService.FindRedeFrotaBetweenDate(minDate, maxDate);
+            var result = await _redeFrotaService.FindRedeFrotaBetweenDate(minDate, maxDate);
 
             // Monta o DataTable para exportação
             DataTable dataTable = new DataTable();
@@ -122,32 +122,35 @@ namespace LogCargas.Controllers
             {
                 foreach (var abastecimentos in result)
                 {
-                    dataTable.Rows.Add(abastecimentos.codigoTransacao,
-                                       abastecimentos.dataTransacao,
-                                       abastecimentos.Placa,
-                                       abastecimentos.TipoCombustivel.Equals("DIESEL S-10") ? codDespesaDiesel : codDespesaArla,
-                                       vazio,
-                                       abastecimentos.EstabelecimentoCNPJ,
-                                       abastecimentos.Litros,
-                                       vazio,
-                                       abastecimentos.valorTransacao,
-                                       vazio,
-                                       vazio,
-                                       abastecimentos.odometro,
-                                       vazio,
-                                       vazio,
-                                       abastecimentos.Parcial,
-                                       "Cartão: " + abastecimentos.NumeroCartao +
-                                       "Cidade" + abastecimentos.NomeCidade +
-                                       "Reduzido" + abastecimentos.NomeReduzido
+                    dataTable.Rows.Add(abastecimentos.codigoTransacao
+                                       ,abastecimentos.dataTransacao
+                                       ,abastecimentos.Placa
+                                       ,abastecimentos.TipoCombustivel.Equals("DIESEL S-10") ? codDespesaDiesel : codDespesaArla
+                                       ,vazio
+                                       ,abastecimentos.EstabelecimentoCNPJ
+                                       ,abastecimentos.Litros
+                                       ,vazio
+                                       ,abastecimentos.valorTransacao
+                                       ,vazio
+                                       ,vazio
+                                       ,abastecimentos.odometro
+                                       ,vazio
+                                       ,vazio
+                                       ,abastecimentos.Parcial
+                                       ,"Cartão: " + abastecimentos.NumeroCartao +
+                                       " - Cidade: " + abastecimentos.NomeCidade
                                        );
                 }
             }
-            using (XLWorkbook teste = new XLWorkbook())
+            using (XLWorkbook workbook = new XLWorkbook())
             {
-                teste.AddWorksheet(result, "Importe")
+                workbook.AddWorksheet(dataTable, "Importar no Bsoft");
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    workbook.SaveAs(ms);
+                    return File(ms.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Importacao Rede Frota.csv");
+                }
             }
-            return ;
         }
     }
 }

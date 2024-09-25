@@ -7,7 +7,7 @@ namespace LogCargas.Models
 {
     public class RedeFrota
     {
-        //public DateTime includeDate {  get; set; }
+        public DateTime includeDate {  get; set; }
         [JsonPropertyName("ownerId")]
         [Display(Name = "Proprietário")]
         public string? OwnerId { get; set; }
@@ -19,6 +19,7 @@ namespace LogCargas.Models
         
         [JsonPropertyName("dataTransacao")]
         [Display(Name = "Dt Trans")]
+        [DataType(DataType.Date)]
         public DateTime dataTransacao { get; set; }
         
         [JsonPropertyName("numeroCartao")]
@@ -43,6 +44,7 @@ namespace LogCargas.Models
        
         [JsonPropertyName("valorTransacao")]
         [Display(Name = "Valor Abast.")]
+        [DataType(DataType.Currency)]
         public double? valorTransacao { get; set; }
       
         [JsonPropertyName("odometro")]

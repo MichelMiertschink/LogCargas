@@ -42,23 +42,16 @@ namespace LogCargas.Services
 
         public async Task<List<RedeFrota>> ExportRedeFrotaBetwewDate(DateTime? minDate, DateTime? maxDate)
         {
-            var result = from obj in _context.RedeFrota select obj;
-            if (minDate.HasValue)
-            {
-                result = result.Where(x => x.dataTransacao.Date >= minDate.Value);
-            }
-
-            if (maxDate.HasValue)
-            {
-                result = result.Where(x => x.dataTransacao.Date <= maxDate.Value);
-            }
-
+            var result = await _context.RedeFrota.Include(
+                x => x.dataTransacao>=minDate || 
+                x.dataTransacao<=maxDate).ToListAsync();
+            
             return result;
         }
 
         public async Task InsertAsync(RedeFrota redeFrota)
         {
-            // redeFrota.IncludeDate = DateTime.Now;
+             redeFrota.includeDate = DateTime.Now;
             _context.Add(redeFrota);
             await _context.SaveChangesAsync();
         }

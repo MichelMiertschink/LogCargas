@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LogCargas.Migrations
 {
     [DbContext(typeof(LogCargasContext))]
-    [Migration("20240923174758_initial")]
-    partial class initial
+    [Migration("20240924202123_InitialCreation")]
+    partial class InitialCreation
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -207,6 +207,9 @@ namespace LogCargas.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<DateTime>("dataTransacao")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime>("includeDate")
                         .HasColumnType("datetime(6)");
 
                     b.Property<int?>("odometro")

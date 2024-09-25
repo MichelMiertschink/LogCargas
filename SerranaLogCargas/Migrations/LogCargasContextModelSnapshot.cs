@@ -207,6 +207,9 @@ namespace LogCargas.Migrations
                     b.Property<DateTime>("dataTransacao")
                         .HasColumnType("datetime(6)");
 
+                    b.Property<DateTime>("includeDate")
+                        .HasColumnType("datetime(6)");
+
                     b.Property<int?>("odometro")
                         .HasColumnType("int");
 

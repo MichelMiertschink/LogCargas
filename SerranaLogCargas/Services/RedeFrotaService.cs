@@ -40,9 +40,18 @@ namespace LogCargas.Services
             return result;
         }
 
+        public async Task<List<RedeFrota>> ExportRedeFrotaBetwewDate(DateTime? minDate, DateTime? maxDate)
+        {
+            var result = await _context.RedeFrota.Include(
+                x => x.dataTransacao>=minDate || 
+                x.dataTransacao<=maxDate).ToListAsync();
+            
+            return result;
+        }
+
         public async Task InsertAsync(RedeFrota redeFrota)
         {
-            // redeFrota.IncludeDate = DateTime.Now;
+             redeFrota.includeDate = DateTime.Now;
             _context.Add(redeFrota);
             await _context.SaveChangesAsync();
         }
@@ -52,6 +61,7 @@ namespace LogCargas.Services
             return await _context.RedeFrota.FirstOrDefaultAsync(obj => obj.codigoTransacao == codTtransacao);
         }
 
+        // Busca dos dados da API do Redefrota
         public async Task<ResponseGenerico<RedeFrota>> BuscarRedeFrota(string dta_inicio, string dta_final)
         {
             var redeFrota = await _redeFrotaApi.BuscarPorData(dta_inicio, dta_final);

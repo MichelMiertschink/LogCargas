@@ -7,6 +7,8 @@ using ReflectionIT.Mvc.Paging;
 using System.Data;
 using DocumentFormat.OpenXml.Spreadsheet;
 using System.Diagnostics.Metrics;
+using LogCargas.Models.ViewModels;
+using System.Diagnostics;
 
 namespace LogCargas.Controllers
 {
@@ -148,9 +150,19 @@ namespace LogCargas.Controllers
                 using (MemoryStream ms = new MemoryStream())
                 {
                     workbook.SaveAs(ms);
-                    return File(ms.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Importacao Rede Frota.csv");
+                    return File(ms.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Importacao Rede Frota.xlsx");
                 }
             }
+        }
+
+        public IActionResult Error(string message)
+        {
+            var viewModel = new ErrorViewModel
+            {
+                Message = message,
+                RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
+            };
+            return View(viewModel);
         }
     }
 }

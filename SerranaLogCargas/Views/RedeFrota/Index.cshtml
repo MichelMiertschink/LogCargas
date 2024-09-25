@@ -24,7 +24,11 @@
                     </li>
                 </ul>
             </form>
-    </div>
+        </div>
+        <div class="d-flex">
+            <h5 class="d-flex text-success">Quantidade: @Model.Count().ToString()</h5>
+            @* <h5 class="d-flex text-success"> Valor Total: @Model.Sum(x => x.valorTransacao).ToString()</h5> *@
+        </div>
 </nav>
 <table class="table table-striped table-bordered table-hover table-bordered shadow table-sm">
     <thead>

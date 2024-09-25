@@ -114,12 +114,12 @@ namespace LogCargas.Controllers
         {
             if (id == null)
             {
-                return RedirectToAction(nameof(Error), new { mnessage = "Id não fornecido" });
+                return RedirectToAction(nameof(Error), new { message = "Id não fornecido" });
             }
             var loadSchedule = await _loadSchedulingService.FindByIdAsync(id.Value);
             if (loadSchedule == null)
             {
-                return RedirectToAction(nameof(Error), new { mnessage = "Id não encontrado" });
+                return RedirectToAction(nameof(Error), new { message = "Id não encontrado" });
             }
             return View(loadSchedule);
         }
@@ -143,12 +143,12 @@ namespace LogCargas.Controllers
         {
             if (id == null)
             {
-                return RedirectToAction(nameof(Error), new { mnessage = "Id não fornecido" });
+                return RedirectToAction(nameof(Error), new { message = "Id não fornecido" });
             }
             var obj = await _loadSchedulingService.FindByIdAsync(id.Value);
             if (obj == null)
             {
-                return RedirectToAction(nameof(Error), new { mnessage = "Id não encontrado" });
+                return RedirectToAction(nameof(Error), new { message = "Id não encontrado" });
             }
             return View(obj);
         }
@@ -189,7 +189,7 @@ namespace LogCargas.Controllers
             {
                 return RedirectToAction(nameof(Error), new
                 {
-                    message = "----- ID não fornecido  = ID: " + loadScheduling.Id.ToString()
+                    message = "ID não fornecido  = ID: " + loadScheduling.Id.ToString()
                 });
             }
 

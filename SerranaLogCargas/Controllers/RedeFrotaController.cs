@@ -7,6 +7,7 @@ using ReflectionIT.Mvc.Paging;
 using System.Data;
 using DocumentFormat.OpenXml.Spreadsheet;
 using System.Diagnostics.Metrics;
+using Humanizer;
 
 namespace LogCargas.Controllers
 {
@@ -123,12 +124,16 @@ namespace LogCargas.Controllers
                 foreach (var abastecimentos in result)
                 {
                     dataTable.Rows.Add(abastecimentos.codigoTransacao
-                                       ,abastecimentos.dataTransacao
-                                       ,abastecimentos.Placa
+                                       ,abastecimentos.dataTransacao.ToString("dd/MM/yyyy")
+                                       ,abastecimentos.Placa.Replace("-","").ToString()
                                        ,abastecimentos.TipoCombustivel.Equals("DIESEL S-10") ? codDespesaDiesel : codDespesaArla
                                        ,vazio
-                                       ,abastecimentos.EstabelecimentoCNPJ
-                                       ,abastecimentos.Litros
+                                       ,abastecimentos.EstabelecimentoCNPJ.Substring(0,2)
+                                       + "." + abastecimentos.EstabelecimentoCNPJ.Substring(3, 3)
+                                       + "." + abastecimentos.EstabelecimentoCNPJ.Substring(7, 3)
+                                       + "/" + abastecimentos.EstabelecimentoCNPJ.Substring(8, 4)
+                                       + "-" + abastecimentos.EstabelecimentoCNPJ.Substring(9, 2)
+                                       , abastecimentos.Litros
                                        ,vazio
                                        ,abastecimentos.valorTransacao
                                        ,vazio
@@ -136,7 +141,7 @@ namespace LogCargas.Controllers
                                        ,abastecimentos.odometro
                                        ,vazio
                                        ,vazio
-                                       ,abastecimentos.Parcial
+                                       , abastecimentos.Parcial.Equals(true) ? "Completo" : ""
                                        ,"Cartão: " + abastecimentos.NumeroCartao +
                                        " - Cidade: " + abastecimentos.NomeCidade
                                        );
@@ -148,7 +153,7 @@ namespace LogCargas.Controllers
                 using (MemoryStream ms = new MemoryStream())
                 {
                     workbook.SaveAs(ms);
-                    return File(ms.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Importacao Rede Frota.csv");
+                    return File(ms.ToArray(), "application/vnd.ms-excel", "Importacao Rede Frota.csv");
                 }
             }
         }

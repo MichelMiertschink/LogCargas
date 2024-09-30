@@ -27,7 +27,7 @@
         </div>
         <div class="d-flex">
             <h5 class="d-flex text-success">Quantidade: @Model.Count().ToString()</h5>
-            @* <h5 class="d-flex text-success"> Valor Total: @Model.Sum(x => x.valorTransacao).ToString()</h5> *@
+            @* => Valor Total: @Model.Sum(x => x.valorTransacao).ToString() *@
         </div>
 </nav>
 <table class="table table-striped table-bordered table-hover table-bordered shadow table-sm">
@@ -52,7 +52,7 @@
                 @Html.DisplayNameFor(model => model.valorTransacao)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.NumeroCartao)
+                @Html.DisplayNameFor(model => model.EstabelecimentoCNPJ)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.quilometragem)
@@ -69,7 +69,7 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
+            <tr class="d-md-table-row">
                 <td>
                     @Html.DisplayFor(modelItem => item.codigoTransacao)
                 </td>
@@ -89,7 +89,7 @@
                     @Html.DisplayFor(modelItem => item.valorTransacao)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.NumeroCartao)
+                    @Html.DisplayFor(modelItem => item.EstabelecimentoCNPJ)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.quilometragem)

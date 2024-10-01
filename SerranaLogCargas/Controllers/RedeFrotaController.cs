@@ -2,7 +2,6 @@
 using LogCargas.Models;
 using LogCargas.Services;
 using Microsoft.AspNetCore.Mvc;
-using ClosedXML.Excel;
 using ReflectionIT.Mvc.Paging;
 using System.Data;
 using DocumentFormat.OpenXml.Spreadsheet;
@@ -34,6 +33,17 @@ namespace LogCargas.Controllers
             ViewData["maxDate"] = maxDate.Value.Date.ToString("yyyy-MM-dd");
             var result = await _redeFrotaService.FindRedeFrotaBetweenDate(minDate, maxDate);
             return View(result);
+        }
+
+        // Busca inteligente
+        //GET to index -- Paging and filter -- Buscar cidade de origem
+        public async Task<IActionResult> FindAllRefuelling(string filter, int pageindex = 1, string sort = "dataTransacao")
+        {
+            var resultado = _redeFrotaService.FindAllRefuelling(filter);
+
+            var model = await PagingList.CreateAsync(resultado.Result, 500, pageindex, sort, "dataTransacao");
+            model.RouteValue = new RouteValueDictionary { { "filter", filter } };
+            return View(model);
         }
 
         public async Task<IActionResult> BuscarRedeFrota(DateTime? minDate, DateTime? maxDate)
@@ -129,11 +139,15 @@ namespace LogCargas.Controllers
                                        , abastecimentos.TipoCombustivel.Equals("DIESEL S-10") ? codDespesaDiesel : codDespesaArla
                                        , vazio
                                        , abastecimentos.EstabelecimentoCNPJ.PadLeft(14, '0')
+
+                                       // Codificação do CNPJ para mandar formatado.
+
                                        //abastecimentos.EstabelecimentoCNPJ.Substring(0, 2)
                                        //+ "." + abastecimentos.EstabelecimentoCNPJ.Substring(3, 3)
                                        //+ "." + abastecimentos.EstabelecimentoCNPJ.Substring(7, 3)
                                        //+ "/" + abastecimentos.EstabelecimentoCNPJ.Substring(8, 4)
                                        //+ "-" + abastecimentos.EstabelecimentoCNPJ.Substring(9, 2)
+                                       
                                        , abastecimentos.Litros
                                        , vazio
                                        , abastecimentos.valorTransacao

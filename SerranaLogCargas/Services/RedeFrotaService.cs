@@ -43,6 +43,27 @@ namespace LogCargas.Services
             return result;
         }
 
+        // Filtro origem OU destino OU cliente OU motorista -- Busca inteligente
+        public async Task<IQueryable<RedeFrota>> FindAllRefuelling(string filter)
+        {
+            var resultado = _context.RedeFrota.AsNoTracking().AsQueryable();
+            if (!string.IsNullOrEmpty(filter))
+            {
+                resultado = resultado.Where(x => x.valorTransacao.ToString().Contains(filter)
+                                              || x.NumeroCartao.Contains(filter)
+                                              || x.codigoTransacao.ToString().Contains(filter)
+                                              || x.Litros.ToString().Contains(filter)
+                                              || x.Placa.Contains(filter)
+                                              || x.NomeCidade.Contains(filter)
+                                              || x.TipoCombustivel.Contains(filter)
+                                              || x.EstabelecimentoCNPJ.Contains(filter)
+                                              || x.quilometragem.ToString().Contains(filter)
+                                              );
+            }
+
+            return resultado.AsQueryable();
+        }
+
         public async Task<List<RedeFrota>> ExportRedeFrotaBetwewDate(DateTime? minDate, DateTime? maxDate)
         {
             var result = await _context.RedeFrota.Include(

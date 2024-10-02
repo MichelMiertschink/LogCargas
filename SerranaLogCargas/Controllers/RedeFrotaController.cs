@@ -7,6 +7,12 @@ using System.Data;
 using DocumentFormat.OpenXml.Spreadsheet;
 using System.Diagnostics.Metrics;
 using Humanizer;
+using DocumentFormat.OpenXml.Bibliography;
+using CsvHelper;
+using CsvHelper.Configuration;
+using System.Globalization;
+using System.IO;
+using LogCargas.Mappings;
 
 namespace LogCargas.Controllers
 {
@@ -82,7 +88,7 @@ namespace LogCargas.Controllers
                 return StatusCode((int)response.CodigoHttp, response.ErroRetorno);
             }
         }
-        public async Task<IActionResult> ExportaBsoft(DateTime? minDate, DateTime? maxDate)
+        public async Task<IActionResult> ExportaBsoftXLSX(DateTime? minDate, DateTime? maxDate)
 
         {
             if (!minDate.HasValue)
@@ -99,7 +105,7 @@ namespace LogCargas.Controllers
             // Faz a busca no banco de dados
             var result = await _redeFrotaService.FindRedeFrotaBetweenDate(minDate, maxDate);
 
-            // Monta o DataTable para exportação
+            // Monta o DataTable para exportação através de XLSX -- Inicio
             DataTable dataTable = new DataTable();
             dataTable.TableName = "Exporta RedeFrota"
                 + minDate
@@ -147,7 +153,7 @@ namespace LogCargas.Controllers
                                        //+ "." + abastecimentos.EstabelecimentoCNPJ.Substring(7, 3)
                                        //+ "/" + abastecimentos.EstabelecimentoCNPJ.Substring(8, 4)
                                        //+ "-" + abastecimentos.EstabelecimentoCNPJ.Substring(9, 2)
-                                       
+
                                        , abastecimentos.Litros
                                        , vazio
                                        , abastecimentos.valorTransacao
@@ -162,6 +168,9 @@ namespace LogCargas.Controllers
                                        );
                 }
             }
+            // Monta o DataTable para exportação através de XLSX -- FIM
+
+            // Cria o arquivo XLSX
             using (XLWorkbook workbook = new XLWorkbook())
             {
                 workbook.AddWorksheet(dataTable, "Importar no Bsoft");
@@ -170,6 +179,39 @@ namespace LogCargas.Controllers
                     workbook.SaveAs(ms);
                     return File(ms.ToArray(), "application/vnd.ms-excel", "Importacao Rede Frota.XLSX");
                 }
+            }
+        }
+        public async void ExportaBsoftCSV(DateTime? minDate, DateTime? maxDate)
+
+        {
+            if (!minDate.HasValue)
+            {
+                minDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+            }
+            if (!maxDate.HasValue)
+            {
+                maxDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month));
+            }
+            if (minDate > maxDate) minDate = maxDate;
+
+            ViewData["minDate"] = minDate.Value.Date.ToString("yyyy-MM-dd");
+            ViewData["maxDate"] = maxDate.Value.Date.ToString("yyyy-MM-dd");
+
+            // Faz a busca no banco de dados
+            var result = await _redeFrotaService.FindRedeFrotaBetweenDate(minDate, maxDate);
+
+            var nomePasta = "C:\\BsoftSistemas\\";
+            var nomeArquivo = "Arquivo_123456.csv";
+            
+
+            using (var streamWriter = new StreamWriter(Path.Combine(nomePasta, nomeArquivo)))
+            using (var csvWriter = new CsvWriter(streamWriter, new CultureInfo("pt-BR", true)))
+            {
+                
+                csvWriter.Context.RegisterClassMap<CsvRedeFrota>();
+                
+                csvWriter.WriteRecords(result);
+                streamWriter.Flush();
             }
         }
     }

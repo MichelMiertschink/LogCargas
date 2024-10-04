@@ -155,7 +155,7 @@ namespace LogCargas.Controllers
                                        //+ "-" + abastecimentos.EstabelecimentoCNPJ.Substring(9, 2)
 
                                        , abastecimentos.Litros
-                                       , vazio
+                                       , abastecimentos.valorTransacao / abastecimentos.Litros
                                        , abastecimentos.valorTransacao
                                        , vazio
                                        , vazio
@@ -163,8 +163,7 @@ namespace LogCargas.Controllers
                                        , vazio
                                        , vazio
                                        , abastecimentos.Parcial.Equals(true) ? "S" : "N"
-                                       , "Cartão: " + abastecimentos.NumeroCartao +
-                                       " - Cidade: " + abastecimentos.NomeCidade
+                                       , " - Cidade: " + abastecimentos.NomeCidade + " - Importado pelo Rede Frota"
                                        );
                 }
             }

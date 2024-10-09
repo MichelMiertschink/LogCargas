@@ -163,7 +163,7 @@ namespace LogCargas.Controllers
                                        , vazio
                                        , vazio
                                        , abastecimentos.Parcial.Equals(true) ? "S" : "N"
-                                       , " - Cidade: " + abastecimentos.NomeCidade + " - Importado pelo Rede Frota"
+                                       , "Cidade: " + abastecimentos.NomeCidade + " - Importado pelo Rede Frota"
                                        );
                 }
             }

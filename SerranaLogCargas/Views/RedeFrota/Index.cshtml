@@ -1,4 +1,5 @@
-﻿@model IEnumerable<LogCargas.Models.RedeFrota>
+﻿@* @model IEnumerable<LogCargas.Models.RedeFrota> *@
+@model ReflectionIT.Mvc.Paging.PagingList<LogCargas.Models.RedeFrota>
 
 @{
     ViewData["Title"] = "Rede Frota - Abastecimentos";
@@ -9,7 +10,7 @@
     <div class="container-fluid">
         <a class="navbar-brand" href="#">Filtro</a>
         <div class="collapse navbar-collapse" id="navbarColor01">
-            <form asp-action="Index">
+            <form method="get" class="d-flex">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
                         <input type="date" class="form-control form-control-sm" name="minDate" value=@ViewData["minDate"] />
@@ -106,3 +107,6 @@
         }
     </tbody>
 </table>
+<div>
+    <vc:pager paging-list="@Model"></vc:pager>
+</div>

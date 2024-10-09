@@ -24,8 +24,12 @@ namespace LogCargas.Controllers
         {
             _redeFrotaService = redeFrota;
         }
-        public async Task<IActionResult> Index(DateTime? minDate, DateTime? maxDate)
+
+        public async Task<IActionResult> Index(string filter, int pageindex = 1, string sort = "dataTransacao")
         {
+            DateTime? minDate = DateTime.Now;
+            DateTime? maxDate = DateTime.Now;
+
 
             if (!minDate.HasValue)
             {
@@ -37,17 +41,19 @@ namespace LogCargas.Controllers
             }
             ViewData["minDate"] = minDate.Value.Date.ToString("yyyy-MM-dd");
             ViewData["maxDate"] = maxDate.Value.Date.ToString("yyyy-MM-dd");
-            var result = await _redeFrotaService.FindRedeFrotaBetweenDate(minDate, maxDate);
-            return View(result);
+            var resultado = await _redeFrotaService.FindRedeFrotaBetweenDate(minDate, maxDate);
+
+            var model = await PagingList.CreateAsync(resultado.Result, 50, pageindex, sort, "dataTransacao");
+            model.RouteValue = new RouteValueDictionary { { "filter", filter } };
+            return View(model);
         }
 
         // Busca inteligente
-        //GET to index -- Paging and filter -- Buscar cidade de origem
         public async Task<IActionResult> FindAllRefuelling(string filter, int pageindex = 1, string sort = "dataTransacao")
         {
             var resultado = _redeFrotaService.FindAllRefuelling(filter);
 
-            var model = await PagingList.CreateAsync(resultado.Result, 500, pageindex, sort, "dataTransacao");
+            var model = await PagingList.CreateAsync(resultado.Result, 50, pageindex, sort, "dataTransacao");
             model.RouteValue = new RouteValueDictionary { { "filter", filter } };
             return View(model);
         }

@@ -1,5 +1,4 @@
-﻿@* @model IEnumerable<LogCargas.Models.RedeFrota> *@
-@model ReflectionIT.Mvc.Paging.PagingList<LogCargas.Models.RedeFrota>
+﻿@model ReflectionIT.Mvc.Paging.PagingList<LogCargas.Models.RedeFrota>
 
 @{
     ViewData["Title"] = "Rede Frota - Abastecimentos";
@@ -105,8 +104,18 @@
                 </td>
             </tr>
         }
+        
     </tbody>
+    
 </table>
 <div>
-    <vc:pager paging-list="@Model"></vc:pager>
+    <vc:pager paging-list="@Model">
+        
+    </vc:pager>
+    <div class="btn-group me-2" role="group" aria-label="Paginação">
+        <button type="submit" class="btn btn-info" name="qtdPaging" value=@ViewData["qtdPaging"] ="20">20</button>
+        <button type="submit" class="btn btn-info" name="qtdPaging" value=@ViewData["qtdPaging"] =50>50</button>
+        <button type="submit" class="btn btn-info" name="qtdPaging" value=@ViewData["qtdPaging"] ="100">100</button>
+    </div>
+
 </div>

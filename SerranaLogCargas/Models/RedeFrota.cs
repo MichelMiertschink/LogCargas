@@ -66,6 +66,7 @@ namespace LogCargas.Models
         public string? NomeCidade { get; set; }
         
         [JsonPropertyName("parcial")]
+        [Display(Name = "Parcial")]
 		public bool? Parcial { get; set; }
         
         [JsonPropertyName("cpfMotorista")]

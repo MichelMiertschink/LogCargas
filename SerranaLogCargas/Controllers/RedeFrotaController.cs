@@ -25,12 +25,8 @@ namespace LogCargas.Controllers
             _redeFrotaService = redeFrota;
         }
 
-        public async Task<IActionResult> Index(string filter, int pageindex = 1, string sort = "dataTransacao")
+        public async Task<IActionResult> Index(DateTime? minDate, DateTime? maxDate, int pageindex = 1, string sort = "dataTransacao")
         {
-            DateTime? minDate = DateTime.Now;
-            DateTime? maxDate = DateTime.Now;
-
-
             if (!minDate.HasValue)
             {
                 minDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
@@ -43,8 +39,8 @@ namespace LogCargas.Controllers
             ViewData["maxDate"] = maxDate.Value.Date.ToString("yyyy-MM-dd");
             var resultado = await _redeFrotaService.FindRedeFrotaBetweenDate(minDate, maxDate);
 
-            var model = await PagingList.CreateAsync(resultado.Result, 50, pageindex, sort, "dataTransacao");
-            model.RouteValue = new RouteValueDictionary { { "filter", filter } };
+            var model = await PagingList.CreateAsync(resultado, 20, pageindex, sort, "dataTransacao");
+            model.RouteValue = new RouteValueDictionary { { "minDate", minDate }, { "maxDate", maxDate} };
             return View(model);
         }
 

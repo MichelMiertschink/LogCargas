@@ -32,10 +32,11 @@
                             </div>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Rede Frota</a>
+                            <a class="nav-link" asp-area="" asp-controller="RedeFrota" asp-action="Index">Rede Frota</a>
+                            @* <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Rede Frota</a>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" asp-area="" asp-controller="RedeFrota" asp-action="Index">Gestão Rede Frota</a>
-                            </div>
+                            </div> *@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" asp-controller="LoadScheduling">Cargas</a>
@@ -55,7 +56,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2024 - MITec - Versão 51bad5ad - <a asp-area="" asp-controller="Home" asp-action="Privacy">Termos de privacidade</a>
+            &copy; 2024 - MITec - Versão 87e3b7e3 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Termos de privacidade</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

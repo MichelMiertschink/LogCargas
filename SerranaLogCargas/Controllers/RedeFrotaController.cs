@@ -144,7 +144,7 @@ namespace LogCargas.Controllers
                     dataTable.Rows.Add(abastecimentos.codigoTransacao
                                        , abastecimentos.dataTransacao.ToString("dd/MM/yyyy")
                                        , abastecimentos.Placa.Replace("-", "").ToString()
-                                       , abastecimentos.TipoCombustivel.Equals("DIESEL S-10") ? codDespesaDiesel : codDespesaArla
+                                       , abastecimentos.TipoCombustivel.Equals("DIESEL") ? codDespesaDiesel : codDespesaArla
                                        , vazio
                                        , abastecimentos.EstabelecimentoCNPJ.PadLeft(14, '0')
 

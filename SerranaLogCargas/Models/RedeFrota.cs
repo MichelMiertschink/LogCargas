@@ -46,7 +46,8 @@ namespace LogCargas.Models
        
         [JsonPropertyName("valorTransacao")]
         [Display(Name = "Valor Abast.")]
-        [DataType(DataType.Currency)]
+        //[DataType(DataType.Currency)]
+        [DisplayFormat(DataFormatString = "{0:C}")]
         public double? valorTransacao { get; set; }
       
         [JsonPropertyName("odometro")]

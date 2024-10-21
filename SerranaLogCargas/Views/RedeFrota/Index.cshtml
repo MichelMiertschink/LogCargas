@@ -28,8 +28,10 @@
             </form>
         </div>
         <div class="d-flex">
-            <h5 class="d-flex text-success">Quantidade: @Model.Count().ToString()</h5>
-            @* => Valor Total: @Model.Sum(x => x.valorTransacao).ToString() *@
+            <h5 class="text-success-emphasis"> Valor: R$ @Model.Sum(obj => obj.valorTransacao).GetValueOrDefault().ToString("n2")</h5>
+            <h5>|</h5>
+            @* <h5 class="text-success">Quantidade: @Model.Count().ToString()</h5> *@
+            <h5 class="text-success"> @Model.TotalRecordCount</h5>
         </div>
 </nav>
 <table class="table table-striped table-bordered table-hover table-bordered shadow table-sm">
@@ -104,18 +106,13 @@
                 </td>
             </tr>
         }
-        
     </tbody>
-    
 </table>
 <div>
-    <vc:pager paging-list="@Model">
-        
-    </vc:pager>
-    <div class="btn-group me-2" role="group" aria-label="Paginação">
-        <button type="submit" class="btn btn-info" name="qtdPaging" value=@ViewData["qtdPaging"] ="20">20</button>
-        <button type="submit" class="btn btn-info" name="qtdPaging" value=@ViewData["qtdPaging"] =50>50</button>
-        <button type="submit" class="btn btn-info" name="qtdPaging" value=@ViewData["qtdPaging"] ="100">100</button>
-    </div>
-
+    <vc:pager paging-list="@Model"></vc:pager>
 </div>
+@* <div class="btn-group me-2" role="group" aria-label="Paginação">
+    <button type="submit" class="btn btn-info" name="qtdPaging" value=@ViewData["qtdPaging"] ="20">20</button>
+    <button type="submit" class="btn btn-info" name="qtdPaging" value=@ViewData["qtdPaging"] ="50">50</button>
+    <button type="submit" class="btn btn-info" name="qtdPaging" value=@ViewData["qtdPaging"] ="100">100</button>
+</div> *@

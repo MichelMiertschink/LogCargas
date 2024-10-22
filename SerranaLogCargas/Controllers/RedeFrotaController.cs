@@ -25,8 +25,13 @@ namespace LogCargas.Controllers
             _redeFrotaService = redeFrota;
         }
 
-        public async Task<IActionResult> Index(DateTime? minDate, DateTime? maxDate, int qtdPaging = 50, int pageindex = 1, string sort = "dataTransacao")
+        public async Task<IActionResult> Index(DateTime? minDate, DateTime? maxDate, int qtdPaging, int pageindex = 1, string sort = "dataTransacao")
         {
+            if(qtdPaging == null)
+            {
+                qtdPaging = 20;
+            }
+
             if (!minDate.HasValue)
             {
                 minDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);

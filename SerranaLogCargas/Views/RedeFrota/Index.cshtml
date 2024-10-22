@@ -17,12 +17,21 @@
                     <li class="nav-item">
                         <input type="date" class="form-control form-control-sm" name="maxDate" value=@ViewData["maxDate"] />
                     </li>
-                    <li>
+                    <li class="nav-item">
                         <button class="btn btn-secondary btn-sm" type="submit">Filtrar</button>
                         <button class="btn btn-primary btn-sm" asp-action="FindAllRefuelling">Busca Inteligente</button>
                         <button class="btn btn-outline-primary btn-sm" type="submit" asp-action="BuscarRedeFrota">Consultar Rede Frota</button>
                         <button class="btn btn-outline-info btn-sm" type="submit" asp-action="ExportaBsoftXLSX">XLSX</button>
                         @* <button class="btn btn-outline-info btn-sm" type="submit" asp-action="ExportaBsoftCSV">.CSV</button> *@
+                    </li>
+                    <li class="nav-item">
+                        Quant. Página
+                        @* Teste da paginação *@
+                        <div class="nav-item btn-group me-2 btn-group-sm" role="group" aria-label="Paginação">
+                            <button type="submit" class="btn btn-info btn-sm" name="qtdPaging" value=20>20</button>
+                            <button type="submit" class="btn btn-info btn-sm" name="qtdPaging" value=50>50</button>
+                            <button type="submit" class="btn btn-info btn-sm" name="qtdPaging" value=100>100</button>
+                        </div>
                     </li>
                 </ul>
             </form>
@@ -111,8 +120,3 @@
 <div>
     <vc:pager paging-list="@Model"></vc:pager>
 </div>
-@* <div class="btn-group me-2" role="group" aria-label="Paginação">
-    <button type="submit" class="btn btn-info" name="qtdPaging" value=@ViewData["qtdPaging"] ="20">20</button>
-    <button type="submit" class="btn btn-info" name="qtdPaging" value=@ViewData["qtdPaging"] ="50">50</button>
-    <button type="submit" class="btn btn-info" name="qtdPaging" value=@ViewData["qtdPaging"] ="100">100</button>
-</div> *@

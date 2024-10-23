@@ -13,6 +13,7 @@ using CsvHelper.Configuration;
 using System.Globalization;
 using System.IO;
 using LogCargas.Mappings;
+using Microsoft.AspNetCore.Mvc.Routing;
 
 namespace LogCargas.Controllers
 {
@@ -50,13 +51,17 @@ namespace LogCargas.Controllers
         }
 
         // Busca inteligente
-        public async Task<IActionResult> FindAllRefuelling(string filter, int pageindex = 1, string sort = "dataTransacao")
+        public async Task<IActionResult> FindAllRefuelling(string filter, int qtdPaging, int pageindex = 1, string sort = "dataTransacao")
         {
+            if (qtdPaging == 0)
+            {
+                qtdPaging = 100;
+            }
             var resultado = _redeFrotaService.FindAllRefuelling(filter);
 
-            var model = await PagingList.CreateAsync(resultado.Result, 50, pageindex, sort, "dataTransacao");
-            model.RouteValue = new RouteValueDictionary { { "filter", filter } };
-            return View(model);
+            var model = await PagingList.CreateAsync(resultado.Result, qtdPaging, pageindex, sort, "dataTransacao");
+            model.RouteValue = new RouteValueDictionary { { "filter", filter }, { "qtdPaging", qtdPaging } };
+            return View("FindAllRefuelling", model);
         }
 
         public async Task<IActionResult> BuscarRedeFrota(DateTime? minDate, DateTime? maxDate)

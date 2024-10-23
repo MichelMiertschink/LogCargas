@@ -27,7 +27,7 @@ namespace LogCargas.Controllers
 
         public async Task<IActionResult> Index(DateTime? minDate, DateTime? maxDate, int qtdPaging, int pageindex = 1, string sort = "dataTransacao")
         {
-            if(qtdPaging == null)
+            if(qtdPaging == 0)
             {
                 qtdPaging = 20;
             }

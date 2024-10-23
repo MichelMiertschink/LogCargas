@@ -22,15 +22,14 @@
                         <button class="btn btn-primary btn-sm" asp-action="FindAllRefuelling">Busca Inteligente</button>
                         <button class="btn btn-outline-primary btn-sm" type="submit" asp-action="BuscarRedeFrota">Consultar Rede Frota</button>
                         <button class="btn btn-outline-info btn-sm" type="submit" asp-action="ExportaBsoftXLSX">XLSX</button>
-                        @* <button class="btn btn-outline-info btn-sm" type="submit" asp-action="ExportaBsoftCSV">.CSV</button> *@
+                       @*  <button class="btn btn-outline-info btn-sm" type="submit" asp-action="ExportaBsoftCSV"></button> *@
                     </li>
-                    <li class="nav-item">
-                        Quant. Página
-                        @* Teste da paginação *@
-                        <div class="nav-item btn-group me-2 btn-group-sm" role="group" aria-label="Paginação">
-                            <button type="submit" class="btn btn-info btn-sm" name="qtdPaging" value=20>20</button>
-                            <button type="submit" class="btn btn-info btn-sm" name="qtdPaging" value=50>50</button>
-                            <button type="submit" class="btn btn-info btn-sm" name="qtdPaging" value=100>100</button>
+                    <li class="nav-item dropdown">
+                        <a class="btn btn-outline-warning dropdown-toggle btn-sm" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Linhas</a>
+                        <div class="dropdown-menu">
+                            <button type="submit" class="dropdown-item" name="qtdPaging" value=20>20</button>
+                            <button type="submit" class="dropdown-item" name="qtdPaging" value=50>50</button>
+                            <button type="submit" class="dropdown-item" name="qtdPaging" value=100>100</button>
                         </div>
                     </li>
                 </ul>

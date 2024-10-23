@@ -27,7 +27,7 @@ namespace LogCargas.Controllers
 
         public async Task<IActionResult> Index(DateTime? minDate, DateTime? maxDate, int qtdPaging, int pageindex = 1, string sort = "dataTransacao")
         {
-            if(qtdPaging == null)
+            if(qtdPaging == 0)
             {
                 qtdPaging = 20;
             }
@@ -149,7 +149,7 @@ namespace LogCargas.Controllers
                     dataTable.Rows.Add(abastecimentos.codigoTransacao
                                        , abastecimentos.dataTransacao.ToString("dd/MM/yyyy")
                                        , abastecimentos.Placa.Replace("-", "").ToString()
-                                       , abastecimentos.TipoCombustivel.Equals("DIESEL") ? codDespesaDiesel : codDespesaArla
+                                       , abastecimentos.TipoCombustivel.Contains("DIESEL") ? codDespesaDiesel : codDespesaArla
                                        , vazio
                                        , abastecimentos.EstabelecimentoCNPJ.PadLeft(14, '0')
 

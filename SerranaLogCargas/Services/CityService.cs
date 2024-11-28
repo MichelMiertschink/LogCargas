@@ -23,6 +23,11 @@ namespace LogCargas.Services
             return await _context.Cities.Include(obj => obj.State).ToListAsync();
         }
 
+        public async Task<List<City>> FindByStateAsync(State state)
+        {
+            return await _context.Cities.Include(obj => obj.State == state).ToListAsync();
+        }
+
         public async Task<IQueryable<City>> FindPagingAsync(string filter)
         {
             var resultado = _context.Cities.Include(obj => obj.State).AsNoTracking().AsQueryable();

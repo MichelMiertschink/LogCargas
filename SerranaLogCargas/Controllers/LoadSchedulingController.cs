@@ -6,6 +6,8 @@ using LogCargas.Services;
 using System.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using ReflectionIT.Mvc.Paging;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace LogCargas.Controllers
 {
@@ -14,14 +16,16 @@ namespace LogCargas.Controllers
         private readonly LoadSchedulingService _loadSchedulingService;
         private readonly CustomerService _customerService;
         private readonly CityService _cityService;
+        private readonly StateService _stateService;
         private readonly DriverService _driverService;
 
-        public LoadSchedulingController(LoadSchedulingService loadScheduling, CustomerService customerService, CityService cityService, DriverService driverService)
+        public LoadSchedulingController(LoadSchedulingService loadScheduling, CustomerService customerService, CityService cityService, DriverService driverService, StateService stateService)
         {
             _loadSchedulingService = loadScheduling;
             _customerService = customerService;
             _cityService = cityService;
             _driverService = driverService;
+            _stateService = stateService;
         }
 
         public async Task<IActionResult> Index()
@@ -62,10 +66,16 @@ namespace LogCargas.Controllers
         {
             try
             {
+                ViewBag.states = await _stateService.FindAllAsync();
+                
+                var citiesList = new List<City>();
+                citiesList.Add(new City());
+                
+                ViewBag.cities = citiesList;
+                
                 var customers = await _customerService.FindAllAsync();
-                var cities = await _cityService.FindAllAsync();
                 var drivers = await _driverService.FindAllAsync();
-                var viewModel = new LoadSchedulingFormViewModel { Customer = customers, City = cities, Driver = drivers };
+                var viewModel = new LoadSchedulingFormViewModel { Customer = customers, Driver = drivers };
                 return View(viewModel);
             }
             catch (Exception e)

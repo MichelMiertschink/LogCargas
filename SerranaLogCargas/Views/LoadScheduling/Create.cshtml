@@ -21,8 +21,8 @@
                 <tr>
                     <td>
                         <div class="form-group">
-                            <label asp-for="LoadScheduling.CityOriginId" class="control-label"></label>
-                            <select asp-for="LoadScheduling.CityOriginId" asp-items="@(new SelectList(Model.City, "Id", "Name"))" class="form-control">
+                            <label class="control-label">UF Origem</label>
+                            <select asp-for="LoadScheduling.CityOriginId" asp-items="@(new SelectList(ViewBag.states, "Id", "Acronym"))" class="form-control" id="EstadoOrigem">
                                 <option disabled selected>Selecionar...</option>
                             </select>
                             <span asp-validation-for="LoadScheduling.CityOriginId" class="text-danger"></span>
@@ -30,8 +30,30 @@
                     </td>
                     <td>
                         <div class="form-group">
+                            <label asp-for="LoadScheduling.CityOriginId" class="control-label"></label>
+
+                            @* @Html.DropDownList("batata", (List<SelectListItem>)ViewBag.cities, htmlAttributes: new { @class = "form-control", id = "EstadoOrigem" }) *@
+
+                            <select asp-for="LoadScheduling.CityOriginId" asp-items="@(new SelectList(ViewBag.cities, "Id", "Name"))" class="form-control">
+                                <option disabled selected>Selecionar...</option>
+                            </select> 
+
+                            <span asp-validation-for="LoadScheduling.CityOriginId" class="text-danger"></span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-group">
+                            <label class="control-label">UF Destino</label>
+                            <select asp-for="LoadScheduling.CityDestinyId" asp-items="@(new SelectList(ViewBag.states, "Id", "Acronym"))" class="form-control">
+                                <option disabled selected>Selecionar...</option>
+                            </select>
+                            <span asp-validation-for="LoadScheduling.CityDestinyId" class="text-danger"></span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-group">
                             <label asp-for="LoadScheduling.CityDestinyId" class="control-label"></label>
-                            <select asp-for="LoadScheduling.CityDestinyId" asp-items="@(new SelectList(Model.City, "Id", "Name"))" class="form-control">
+                            <select asp-for="LoadScheduling.CityDestinyId" asp-items="@(new SelectList(ViewBag.cities, "Id", "Name"))" class="form-control">
                                 <option disabled selected>Selecionar...</option>
                             </select>
                             <span asp-validation-for="LoadScheduling.CityDestinyId" class="text-danger"></span>
